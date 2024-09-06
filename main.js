@@ -18,24 +18,26 @@ document.addEventListener('DOMContentLoaded', function () {
     window.checkLogin = checkLogin;
 });
 
-// function saveContent() {
-//     const title = document.getElementById('admin-title').innerText;
-//     const content = document.getElementById('admin-content').innerText;
+function saveContent() {
+    const title = document.getElementById('admin-title').innerText;
+    const content = document.getElementById('admin-content').innerText;
 
-//     fetch('/save-content', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ title, content }),
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             alert('Контент сохранён!');
-//         })
-//         .catch(error => {
-//             console.error('Ошибка:', error);
-//         });
-// }
+
+
+    fetch('/save-content', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, content }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert('Контент сохранён!');
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+        });
+}
 
 /* логика модального окна конец */
