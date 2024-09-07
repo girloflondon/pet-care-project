@@ -1,1 +1,38 @@
+@mixin font-face($family, $weight) {
+  font-family: $family, sans-serif;
+  font-weight: $weight;
+}
 
+@mixin header($size) {
+  font-size: $size;
+  @include font-face("SNFBSTRD-handwritten", 400);
+  color: rgba(0, 0, 0, 1);
+}
+
+@mixin main($weight, $size) {
+  font-size: $size;
+  @include font-face("Roboto", $weight);
+  line-height: 33.1px;
+  letter-spacing: 0.05em;
+  color: rgba(78, 76, 70, 1);
+}
+
+@mixin button($width) {
+  width: $width;
+  height: 44px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(18, 76, 95, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+%transparent {
+  :hover {
+    opacity: 75%;
+  }
+
+  :active {
+    opacity: 50%;
+  }
+}
