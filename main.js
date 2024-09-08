@@ -22,6 +22,7 @@ function saveContent() {
     const title = document.getElementById('admin-title').innerText;
     const content = document.getElementById('admin-content').innerText;
 
+
     fetch('/save-content', {
         method: 'POST',
         headers: {
