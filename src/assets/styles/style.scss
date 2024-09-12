@@ -1,6 +1,15 @@
 @import "./variables.scss";
 @import "./templates.scss";
 
+%font-nav {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+}
+
 %font-h2 {
   font-family: "SNFBSTRD-handwritten";
   font-weight: 400;
@@ -43,8 +52,7 @@ h4 {
 }
 .header-nav {
   min-width: 40%;
-  font-weight: 400;
-  font-size: 16px;
+  @extend%font-nav;
   text-transform: uppercase;
 
   @media screen and (max-width: 750px) {
@@ -64,6 +72,7 @@ a {
 .header__btn {
   width: 102px;
   height: 46px;
+  @extend%font-nav;
   background-color: var(--btn-menu);
   border-radius: 10px;
   border: none;
@@ -99,23 +108,24 @@ a {
   letter-spacing: 0.05em;
   padding-top: 2%;
 }
-.about {
-}
+// .about {
+// }
 .about_first-part {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 8%;
   @media screen and (max-width: 1250px) {
     flex-wrap: wrap;
   }
 }
 .about__img-container {
+  padding-top: 3.5%;
+  padding-left: 2.2%;
   min-width: 590px;
   height: 733px;
 }
 .about__img {
-  width: 124%;
+  width: 94%;
 }
 .about-content {
   padding-top: 6%;
@@ -137,16 +147,16 @@ a {
   @extend%font-h4;
 }
 .about_sechond-part {
-  padding-top: 0.7%;
-  width: 58vw;
+  padding-top: 0.5%;
+  width: 51vw;
 
   @media screen and (max-width: 1200px) {
     width: 80vw;
-  }  
-=======
+  }
+}
 .main {
-  margin: 0 120px 0 120px;
-  @include main(400, 24px);
+  // margin: 0 120px 0 120px;
+  // @include main(400, 24px);
 
   .main__block1 {
     display: grid;
@@ -256,7 +266,7 @@ a {
       align-items: center;
 
       .list-item__header-title {
-        @include main(700, 24px);
+        // @include main(700, 24px);
         color: rgba(18, 76, 95, 1);
       }
     }
@@ -267,7 +277,7 @@ a {
 
       .block1__text1,
       .block1__text2 {
-        @include main(700, 16px);
+        // @include main(700, 16px);
 
         .block1__text1-subheader,
         .block1__text2-subheader {
@@ -288,8 +298,8 @@ a {
       .block1__text3 {
         width: 95%;
         grid-area: 3/1/4/3;
-        @include main(400, 16px);
-        line-height: 22.06px;
+        // @include main(400, 16px);
+        // line-height: 22.06px;
       }
     }
 
@@ -299,7 +309,7 @@ a {
       gap: 7px;
       align-items: center;
       justify-content: start;
-      @include main(700, 16px);
+      // @include main(700, 16px);
       color: rgba(18, 76, 95, 1);
 
       .block2__button {
@@ -358,7 +368,7 @@ a {
     .footer-block1__item1-text2,
     .footer-block1__text2 {
       margin: 0;
-      @include main(700, 20px);
+      // @include main(700, 20px);
       color: rgba(0, 0, 0, 1);
       line-height: 15px;
       letter-spacing: 0.05em;
@@ -391,7 +401,7 @@ a {
 
     .footer-block1__text3 {
       justify-self: end;
-      @include main(700, 24px);
+      // @include main(700, 24px);
       color: rgba(18, 76, 95, 1);
     }
   }
@@ -404,7 +414,7 @@ a {
     justify-content: space-between;
     align-content: center;
     align-items: center;
-    @include main(400, 12px);
+    // @include main(400, 12px);
     color: rgba(76, 76, 70, 1);
     text-transform: uppercase;
 
