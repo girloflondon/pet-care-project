@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/assets/styles/style.scss" />
+    <link rel="stylesheet" href="./src/assets/styles/normalize.css" />
+    <title>Pet Care</title>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <h2>Введите логин и пароль</h2>
+                <input type="text" id="username" placeholder="Логин" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <button onclick="checkLogin()">Войти</button>
+            </div>
+        </div>
+
+        <h1 contenteditable="true" id="admin-title">Это админская версия сайта</h1>
+        <p contenteditable="true" id="admin-content">Пока на основном ничего нет, тут тоже будет пустовато, но
+            скоро я начну тестить тут всякие кнопочки и поля :)</p>
+        <button onclick="saveContent()">Сохранить</button>
+
+    </main>
+    <footer></footer>
+    <script src="main.js"></script>
+</body>
+
+</html>
