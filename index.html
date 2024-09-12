@@ -10,7 +10,7 @@
   <body>
     <header></header>
     <main class="main">
-      
+      <!--
       <div class="main__container1">
         <div class="main__block1">
           <div class="main-block1__item1">
@@ -49,44 +49,63 @@
           </div>
         </div>
       </div>
+      -->
 
-      <div class="main__container2">
+      <section class="main__container2">
         <div class="main__navigation">
           <h2 class="main-navigation__header">Наши фонды</h2>
           <div class="main-navigation__block">
-            <button class="main-navigation__button1">Все страницы</button>
-            <button class="main-navigation__button2"></button>
-            <button class="main-navigation__button3"></button>
+            <button id="all" class="main-navigation__button1">
+              Все страницы
+            </button>
+            <button id="back" class="main-navigation__button2"></button>
+            <button id="forward" class="main-navigation__button3"></button>
           </div>
         </div>
 
         <div class="main__list">
+          <!--
           <div class="main__list-item">
             <div class="list-item__header">
-              <img class="list-item__header-image" src="./src/assets/images/icons/dog-cat-icon.svg" alt="Фонд">
+              <img
+                class="list-item__header-image"
+                src="./src/assets/images/icons/dog-cat-icon.svg"
+                alt="Фонд"
+              />
               <h4 class="list-item__header-title">Биосфера Балтии</h4>
             </div>
             <div class="list-item__block1">
-              <p class="block1__text1"><span class="block1__text1-subheader">Тип: </span> АНО институт</p>
-              <p class="block1__text2"><span class="block1__text2-subheader">Год: </span> 2018</p>
+              <div class="block1__text-block">
+                <p class="block1__text1">
+                  <span class="block1__text1-subheader">Тип: </span> АНО
+                  институт
+                </p>
+                <p class="block1__text2">
+                  <span class="block1__text2-subheader">Год: </span> 2018
+                </p>
+              </div>
               <span class="block1__element"></span>
-              <p class="block1__text3">Мы занимаемся реабилитацией диких животных в Калининградской области. Наша цель - строительство центра реабилитации и реинтродукции диких животных на территории региона.</p>
+              <p class="block1__text">
+                Мы занимаемся реабилитацией диких животных в Калининградской
+                области. Наша цель - строительство центра реабилитации и
+                реинтродукции диких животных на территории региона.
+              </p>
             </div>
             <div class="list-item__block2">
               <p class="block2__text">Подробнее о фонде</p>
               <button class="block2__button"></button>
             </div>
-          </div>
+          </div> -->
         </div>
-      </div>
-
+      </section>
     </main>
     <footer>
       <div class="container__footer">
-
         <div class="footer__block1">
           <div class="footer-block1__item1">
-            <p class="footer-block1__item1-text1">Все интересные события проекта</p>
+            <p class="footer-block1__item1-text1">
+              Все интересные события проекта
+            </p>
             <p class="footer-block1__item1-text2">— в наших социальных сетях</p>
           </div>
           <p class="footer-block1__text2">Контакты</p>
@@ -96,13 +115,14 @@
           </div>
           <p class="footer-block1__text3">+7-911-999-99-99</p>
         </div>
-        
+
         <div class="footer__block2">
           <p class="footer-block2__text1">&#169;все права защищены</p>
-          <a class="footer-block2__link" href="https://itgirlschool.com/">IT Girls Shool</a>
+          <a class="footer-block2__link" href="https://itgirlschool.com/"
+            >IT Girls Shool</a
+          >
           <p class="footer-block2__text2">2024</p>
         </div>
-
       </div>
     </footer>
     <script type="module" src="/main.js"></script>

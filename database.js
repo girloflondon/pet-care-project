@@ -1,4 +1,4 @@
-const database = [
+export const database = [
   {
     name: "Биосфера Балтики",
     type: "АНО институт",
