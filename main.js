@@ -90,10 +90,10 @@ function displayFunds(first, last) {
           ${item.description}
         </p>
       </div>
-      <div class="list-item__block2">
+      <form class="list-item__block2" action="${item.link}">
         <p class="block2__text">Подробнее о фонде</p>
-        <button class="block2__button"></button>
-      </div>
+        <button type="submit" class="block2__button"></button>
+      </form>
     `;
     listContainer.appendChild(listItem);
   });
