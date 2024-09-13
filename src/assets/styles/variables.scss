@@ -23,18 +23,17 @@
 }
 
 :root {
-    --text-color-menu: rgba(0, 0, 0, 1);
-    --text-color-btn: rgba(255, 255, 255, 1);
-    --text-color-sub-header: rgba(131, 154, 169, 1);
-    --text-color-main: rgba(76, 76, 70, 1);
-  
-    --main-footer-bg: rgba(18, 76, 95, 0.05);
-    --btn-menu: rgba(18, 76, 95, 1);
-    --btn-small: rgba(222, 236, 245, 1);
-    --line-color: rgba(199, 199, 199, 1);
-  
-    --space-s: 16px
-    --space-m: 20px;
-    --space-l: 24px;
-    --space-xl: 35px;
-  }
+  --text-color-menu: rgba(0, 0, 0, 1);
+  --text-color-btn: rgba(255, 255, 255, 1);
+  --text-color-sub-header: rgba(131, 154, 169, 1);
+  --text-color-main: rgba(78, 76, 70, 1);
+
+  --main-footer-bg: rgba(18, 76, 95, 0.05);
+  --btn-menu: rgba(18, 76, 95, 1);
+  --line-color: rgba(199, 199, 199, 1);
+
+  --space-s: 1rem;
+  --space-m: 1.25rem;
+  --space-l: 1.5rem;
+  --space-xl: 2.1875rem;
+}

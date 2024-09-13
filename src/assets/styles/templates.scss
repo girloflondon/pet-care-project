@@ -1,3 +1,50 @@
+/* Стиль для модального окна начало */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+
+body.modal-active {
+  overflow: hidden;
+}
+
+/* Стиль для модального окна конец */
+
 @mixin font-face($family, $weight) {
   font-family: $family, sans-serif;
   font-weight: $weight;
@@ -12,7 +59,7 @@
 @mixin main($weight, $size) {
   font-size: $size;
   @include font-face("Roboto", $weight);
-  line-height: 33.1px;
+  line-height: 2.0688rem;
   letter-spacing: 0.05em;
   color: rgba(78, 76, 70, 1);
 }
@@ -20,9 +67,47 @@
 @mixin button($width) {
   width: $width;
   height: 44px;
-  font-size: 16px;
+  font-size: 1rem;
   border: none;
   border-radius: 10px;
   background-color: rgba(18, 76, 95, 1);
   color: rgba(255, 255, 255, 1);
+}
+
+%block-border {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+%font-nav {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+}
+
+%font-h2 {
+  font-family: "SNFBSTRD-handwritten";
+  font-weight: 400;
+  font-size: 2.2em;
+  line-height: 48px;
+  letter-spacing: 0.06em;
+}
+%font-h4 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 138%;
+  letter-spacing: 0.05em;
+  color: #4e4c46;
+}
+%font-text {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 137%;
+  letter-spacing: 0.05em;
+  color: #4e4c46;
 }

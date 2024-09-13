@@ -1,116 +1,114 @@
-import { database } from "./database";
-console.log(database);
+/* логика модального окна начало */
+// document.addEventListener("DOMContentLoaded", function () {
+//   document.body.classList.add("modal-active");
 
-const allBtn = document.getElementById("all");
-const backBtn = document.getElementById("back");
-const forwardBtn = document.getElementById("forward");
+//   function checkLogin() {
+//     const username = document.getElementById("username").value;
+//     const password = document.getElementById("password").value;
 
-//const listContainer = document.querySelector("main__list");
+//     if (username === "admin" && password === "password") {
+//       document.getElementById("loginModal").style.display = "none";
+//       document.body.classList.remove("modal-active");
+//     } else {
+//       alert("Неправильный логин или пароль");
+//     }
+//   }
 
-//function showAll() {
-//  for (let item of Database) {
-//    listContainer.append = `<div class="main__list-item">
-//    <div class="list-item__header">
-//      <img
-//        class="list-item__header-image"
-//        src="./src/assets/images/icons/dog-cat-icon.svg"
-//        alt="Фонд"
-//      />
-//      <h4 class="list-item__header-title">${item.name}</h4>
-//    </div>
-//    <div class="list-item__block1">
-//      <p class="block1__text1">
-//       <span class="block1__text1-subheader">Тип: </span> ${item.type}
-//      </p>
-//      <p class="block1__text2">
-//        <span class="block1__text2-subheader">Год: </span> ${item.year}
-//      </p>
-//      <span class="block1__element"></span>
-//      <p class="block1__text3">
-//      ${item.description}
-//      </p>
-//    </div>
-//    <div class="list-item__block2">
-//      <p class="block2__text">Подробнее о фонде</p>
-//     <button class="block2__button"></button>
-//    </div>
-//  </div>`;
-//  }
-//}
-//window.addEventListener("load", showAll());
+//   window.checkLogin = checkLogin;
+// });
 
-// NUMBER OF PAGES - function
-function numberOfPages() {
-  let totalPages = Math.trunc(database.length / 5);
-  if (database.length % 5 > 0) {
-    totalPages = ++totalPages;
-  }
-  return totalPages;
+// function saveContent() {
+//     const title = document.getElementById('admin-title').innerText;
+//     const content = document.getElementById('admin-content').innerText;
+
+//     fetch('/save-content', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ title, content }),
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             alert('Контент сохранён!');
+//         })
+//         .catch(error => {
+//             console.error('Ошибка:', error);
+//         });
+// }
+
+/* логика модального окна конец */
+
+import { database } from "./database.js";
+
+const listContainer = document.querySelector(".main__list");
+const allButton = document.getElementById("all");
+const backButton = document.getElementById("back");
+const forwardButton = document.getElementById("forward");
+
+let currentPage = 0;
+const itemsPerPage = 5;
+
+function displayFunds(first, last) {
+  listContainer.innerHTML = "";
+  const itemsToShow = database.slice(first, last);
+
+  itemsToShow.forEach((item) => {
+    const listItem = document.createElement("div");
+    listItem.classList.add("main__list-item");
+
+    listItem.innerHTML = `
+      <div class="list-item__header">
+        <img
+          class="list-item__header-image"
+          src="./src/assets/images/icons/dog-cat-icon.svg"
+          alt="${item.name}"
+        />
+        <h4 class="list-item__header-title">${item.name}</h4>
+      </div>
+      <div class="list-item__block1">
+        <div class="block1__text-block">
+          <p class="block1__text1">
+            <span class="block1__text1-subheader">Тип: </span> ${item.type}
+          </p>
+          <p class="block1__text2">
+            <span class="block1__text2-subheader">Год: </span> ${item.year}
+          </p>
+        </div>
+        <span class="block1__element"></span>
+        <p class="block1__text">
+          ${item.description}
+        </p>
+      </div>
+      <div class="list-item__block2">
+        <p class="block2__text">Подробнее о фонде</p>
+        <button class="block2__button"></button>
+      </div>
+    `;
+    listContainer.appendChild(listItem);
+  });
 }
 
-// SHOW LIST ITEMS - function that loads all pages
-function showListItems() {
-  for (let item of database) {
-    const listContainer = document.createElement("div");
-    listContainer.classList.add("main__list-item");
-    listContainer.innerHTML = `
-    <div class="list-item__header">
-              <img
-                class="list-item__header-image"
-                src="./src/assets/images/icons/dog-cat-icon.svg"
-                alt="${item.name}"
-              />
-              <h4 class="list-item__header-title">${item.name}</h4>
-            </div>
-            <div class="list-item__block1">
-              <div class="block1__text-block">
-                <p class="block1__text1">
-                  <span class="block1__text1-subheader">Тип: </span> ${item.type}
-                </p>
-                <p class="block1__text2">
-                  <span class="block1__text2-subheader">Год: </span> ${item.year}
-                </p>
-              </div>
-              <span class="block1__element"></span>
-              <p class="block1__text">
-                ${item.description}
-              </p>
-            </div>
-            <div class="list-item__block2">
-              <p class="block2__text">Подробнее о фонде</p>
-              <button class="block2__button"></button>
-            </div>
-`;
-    document.querySelector(".main__list").append(listContainer);
+displayFunds(0, itemsPerPage);
+
+allButton.addEventListener("click", () => {
+  displayFunds(0, database.length);
+});
+
+forwardButton.addEventListener("click", () => {
+  if ((currentPage + 1) * itemsPerPage < database.length) {
+    currentPage++;
+    const start = currentPage * itemsPerPage;
+    const end = Math.min(start + itemsPerPage, database.length);
+    displayFunds(start, end);
   }
-}
+});
 
-let currentPage = 1;
-
-// f -> button Back
-function goToPreviousPage() {
-  if (currentPage > 1) {
-    currentPage = --currentPage;
-  } else {
-    currentPage = numberOfPages();
-    console.log(`Номер последней страницы: ${currentPage}`);
+backButton.addEventListener("click", () => {
+  if (currentPage > 0) {
+    currentPage--;
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    displayFunds(start, end);
   }
-  console.log(`А тут у нас номер нынешней страницы: ${currentPage}`);
-}
-
-// f -> button Forward
-function goToNextPage() {
-  if (currentPage < numberOfPages()) {
-    currentPage = ++currentPage;
-  } else {
-    currentPage = 1;
-    console.log(`Сейчас мы откатились на одну страницу: ${currentPage}`);
-  }
-}
-
-//document.getElementById("counter").textContent = `${currentPage} / ${numberOfPages()}`;
-
-document.addEventListener("DOMContentLoaded", showListItems);
-allBtn.addEventListener("click", showListItems);
-backBtn.addEventListener("click", goToPreviousPage);
-forwardBtn.addEventListener("click", goToNextPage);
+});

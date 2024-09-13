@@ -1,39 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./src/assets/styles/style.scss" />
-    <link rel="stylesheet" href="./src/assets/styles/normalize.css" />
-    <title>Pet Care</title>
-  </head>
-  <body>
-    <header></header>
-    <main class="main">
-      <!--
-      <div class="main__container1">
-        <div class="main__block1">
-          <div class="main-block1__item1">
-            <img class="main-block1__item1-image" src="./src/assets/images/pics/main-side-img.png" alt="Собака"></img>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./src/assets/styles/style.scss" />
+  <link rel="stylesheet" href="./src/assets/styles/normalize.css" />
+  <title>Pet Care</title>
+</head>
+
+<body class="body">
+  <header>
+    <div class="container-header">
+      <nav class="header-nav">
+        <ul class="header-list">
+          <li><a href="">О нас</a></li>
+          <li><a href="">Наши фонды</a></li>
+          <li><a href="">Контакты</a></li>
+          <li><button class="header__btn">Поиск</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    <section class="fund">
+      <div class="container-fund">
+        <div class="fund-content">
+          <h1 class="title__h1">Фонды помощи <br>бездомным животным <br>в Калининградской области</h1>
+          <p class="sub-title__h1">мы хотим, чтобы животные были счастливы!</p>
+        </div>
+      </div>
+    </section>
+    <section class="about">
+      <div class="container-fund">
+        <div class="about_first-part">
+          <div class="about__img-container">
+            <img class="about__img" src="src/assets/images/pics/main-side-img.png" alt="dog">
           </div>
-          <div class="main-block1__item2">
-            <h2 class="main-block1__item2-header">О Фонде</h2>
-            <p class="main-block2__item2-text">
-          Добро пожаловать в наш благотворительный проект, посвященный помощи
-          животным в Калининградской области! Мы объединили усилия для создания
-          уникального ресурса, где собраны контакты всех благотворительных
-          организаций и инициатив, работающих в сфере защиты и помощи животным.
+          <div class="about-content">
+            <h2 class="title__h2">О ФОНДЕ</h2>
+            <p class="about__text">Добро пожаловать в наш благотворительный проект, посвященный помощи животным в
+              Калининградской области!
+              Мы объединили усилия для создания уникального ресурса, где собраны контакты всех благотворительных
+              организаций и инициатив, работающих в сфере защиты и помощи животным.
             </p>
-            <div class="main-block2__item2-text">
-              <h4 class="item2-text__subheader subheader">Цели проекта:</h4>
-              <p class="item2-text__list-item">- Создание сообщества: Мы хотим объединить всех, кто неравнодушен к судьбе бездомных животных, чтобы вместе оказывать поддержку и помощь.</p>
-              <p class="item2-text__list-item">- Информирование и просвещение: На нашем сайте вы найдете информацию о различных проектах, акциях и возможностях волонтерства.</p>
-              <p class="item2-text__list-item">- Сбор средств: Мы организуем событийные мероприятия и кампании по сбору средств для помощи приютам и отдельным животным, нуждающимся в помощи.</p>
-            </div>
+            <h4 class="title__h4">Цели проекта:</h4>
+            <p class="about__text">- Создание сообщества: Мы хотим объединить всех, кто неравнодушен к судьбе бездомных
+              животных, чтобы вместе оказывать поддержку и помощь. <br>
+              - Информирование и просвещение: На нашем сайте вы найдете информацию о различных проектах, акциях и
+              возможностях волонтерства. <br>
+              - Сбор средств: Мы организуем событийные мероприятия и кампании по сбору средств для помощи приютам и
+              отдельным животным, нуждающимся в помощи
+            </p>
           </div>
         </div>
-      
-        <div class="main__block2">
+        <div class="about_sechond-part">
+          <h4 class="title__h4">Почему это важно?</h4>
+          <p class="about__text">Каждый день животные в нашем регионе сталкиваются с трудностями, и нам нужна ваша
+            помощь, чтобы улучшить их
+            жизнь. Объединив усилия, мы можем сделать мир лучше для братьев наших меньших.</p>
+          <h4 class="title__h4">Как вы можете помочь?</h4>
+          <p class="about__text">- Поддерживайте и делитесь информацией о нашем проекте. <br>
+            - Присоединяйтесь к волонтерским инициативам и помогайте в уходе за животными. <br>
+            - Делайте пожертвования на развитие проектов, которые вам близки.</p>
+          <p class="about__text">Давайте вместе сделаем Калининградскую область местом, где каждый животный чувствует
+            заботу и любовь! Ваш
+            вклад имеет значение!</p>
+        </div>
+      </div>
+    </section>
+    <!--
+    <section class="main__container1">
+       <div class="main__block2">
           <div class="main-block2__item1">
             <h4 class="main-block2__subheader subheader">Почему это важно?</h4>
             <p class="main-block2__text">Каждый день животные в нашем регионе сталкиваются с трудностями, и нам нужна ваша помощь, чтобы улучшить их жизнь. Объединив усилия, мы можем сделать мир лучше для братьев наших меньших.</p>
@@ -48,10 +85,9 @@
             <p class="item3__text">Давайте вместе сделаем Калининградскую область местом, где каждый животный чувствует заботу и любовь! Ваш вклад имеет значение!</p>
           </div>
         </div>
-      </div>
-      -->
+      </div> -->
 
-      <section class="main__container2">
+      <div id="our-funds" class="main__container2">
         <div class="main__navigation">
           <h2 class="main-navigation__header">Наши фонды</h2>
           <div class="main-navigation__block">
@@ -62,7 +98,6 @@
             <button id="forward" class="main-navigation__button3"></button>
           </div>
         </div>
-
         <div class="main__list">
           <!--
           <div class="main__list-item">
@@ -99,7 +134,7 @@
         </div>
       </section>
     </main>
-    <footer>
+    <footer id="contacts" class="footer">
       <div class="container__footer">
         <div class="footer__block1">
           <div class="footer-block1__item1">
@@ -118,9 +153,6 @@
 
         <div class="footer__block2">
           <p class="footer-block2__text1">&#169;все права защищены</p>
-          <a class="footer-block2__link" href="https://itgirlschool.com/"
-            >IT Girls Shool</a
-          >
           <p class="footer-block2__text2">2024</p>
         </div>
       </div>
