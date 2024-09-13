@@ -38,3 +38,14 @@
 // }
 
 /* логика модального окна конец */
+
+/*бургер меню*/
+// import { click } from "./src/assets/burger";
+function click(e) {
+  e.preventDefault();
+  this.classList.toggle("active");
+  document.querySelector(".header-list").classList.toggle("header-nav__active");
+  document.querySelector(".body").classList.toggle("no_scroll");
+  document.querySelector(".burger__dark").classList.toggle("dark");
+}
+document.querySelector(".burger").addEventListener("click", click);

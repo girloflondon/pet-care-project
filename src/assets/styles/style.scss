@@ -34,15 +34,24 @@
   color: #4e4c46;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 p,
 h2,
 h4 {
   margin: 0;
 }
-
 .body {
+  width: 100%;
+}
+.common-container {
   width: 1440px;
   margin: 0 auto;
+}
+.no_scroll {
+  overflow: hidden;
 }
 .container-header {
   margin-top: 3.2%;
@@ -65,9 +74,48 @@ h4 {
   justify-content: space-around;
   align-items: center;
   gap: 12%;
+  @media screen and (max-width: 750px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5vh;
+    margin: 0;
+    padding: 0;
+    width: 320px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    margin-top: 0;
+    padding-top: 28px;
+    background-color: #292929;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    transform: translate(100%);
+  }
+}
+.header-nav__active {
+  @media screen and (max-width: 750px) {
+    transform: translate(0%);
+  }
 }
 a {
   text-decoration: none;
+  color: #000;
+}
+.header__a {
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 1s ease; /* Плавная анимация */
+  &:hover {
+    border-bottom: 2px solid var(--btn-menu);
+  }
+  &:active {
+    color: var(--btn-menu);
+  }
 }
 .header__btn {
   width: 102px;
@@ -77,6 +125,77 @@ a {
   border-radius: 10px;
   border: none;
   color: var(--text-color-btn);
+}
+.burger {
+  display: none;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 22px;
+  margin-top: 48px;
+  margin-right: 11px;
+  span {
+    height: 2px;
+    width: 100%;
+    background-color: #f1cdb3;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: #f1cdb3;
+  }
+  &:before {
+    top: 0;
+  }
+  &:after {
+    bottom: 0;
+  }
+  @media screen and (max-width: 750px) {
+    display: flex;
+    z-index: 51;
+
+    .active span {
+      top: 50%;
+      transform: rotate(90deg) translate(0, -30%);
+      transition: 0.5s;
+    }
+
+    .active &::after {
+      top: 50%;
+      left: 35%;
+      transform: rotate(90deg) translate(0, -30%);
+      transition: 0.5s;
+    }
+    .active &::before {
+      top: 50%;
+      right: 35%;
+      transform: rotate(90deg) translate(0, -50%);
+      transition: 0.5s;
+    }
+  }
+}
+/*Добавляем класс active для анимации иконки бургера*/
+.active {
+  @media screen and (max-width: 750px) {
+    margin-right: 0;
+  }
+}
+
+.dark {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 .fund {
   background: url(../images/pics/header-bg.png);
