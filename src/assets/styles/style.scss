@@ -1,29 +1,77 @@
 @import "./variables.scss";
 @import "./templates.scss";
 
+%font-nav {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+}
+
+%font-h2 {
+  font-family: "SNFBSTRD-handwritten";
+  font-weight: 400;
+  font-size: 2.2em;
+  line-height: 48px;
+  letter-spacing: 0.06em;
+}
+%font-h4 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 138%;
+  letter-spacing: 0.05em;
+  color: #4e4c46;
+}
+%font-text {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 137%;
+  letter-spacing: 0.05em;
+  color: #4e4c46;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 p,
 h2,
 h4 {
   margin: 0;
 }
-
-.container-header,
-.fund,
-.about {
-  width: 1440px;
-  margin: 0 auto;
+.body {
+  width: 100%;
 }
-
+.common-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  @media screen and (max-width: 1300px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 700px) {
+    text-align: center;
+  }
+}
+.no_scroll {
+  overflow: hidden;
+}
 .container-header {
   margin-top: 3.2%;
-  max-width: 1400px;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 .header-nav {
-  min-width: 40%;
+  width: 40%;
   @extend%font-nav;
   text-transform: uppercase;
+  @media screen and (max-width: 1300px) {
+    font-size: 12px;
+  }
 
   @media screen and (max-width: 750px) {
     display: none;
@@ -35,9 +83,51 @@ h4 {
   justify-content: space-around;
   align-items: center;
   gap: 12%;
+  @media screen and (max-width: 1390px) {
+    gap: 0;
+  }
+  @media screen and (max-width: 750px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5vh;
+    margin: 0;
+    padding: 0;
+    width: 320px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    margin-top: 0;
+    padding-top: 28px;
+    background-color: #292929;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    transform: translate(100%);
+  }
+}
+.header-nav__active {
+  @media screen and (max-width: 750px) {
+    transform: translate(0%);
+  }
 }
 a {
   text-decoration: none;
+  color: #000;
+}
+.header__a {
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 1s ease; /* Плавная анимация */
+  &:hover {
+    border-bottom: 2px solid var(--btn-menu);
+  }
+  &:active {
+    color: var(--btn-menu);
+  }
 }
 .header__btn {
   width: 102px;
@@ -47,9 +137,94 @@ a {
   border-radius: 10px;
   border: none;
   color: var(--text-color-btn);
+  @media screen and (max-width: 1300px) {
+    font-size: 12px;
+    max-width: 80px;
+    height: 36px;
+  }
+}
+.burger {
+  display: none;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 22px;
+  margin-top: 48px;
+  margin-right: 11px;
+  span {
+    height: 2px;
+    width: 100%;
+    background-color: #f1cdb3;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: #f1cdb3;
+  }
+  &:before {
+    top: 0;
+  }
+  &:after {
+    bottom: 0;
+  }
+  @media screen and (max-width: 750px) {
+    display: flex;
+    z-index: 51;
+
+    .active span {
+      top: 50%;
+      transform: rotate(90deg) translate(0, -30%);
+      transition: 0.5s;
+    }
+
+    .active &::after {
+      top: 50%;
+      left: 35%;
+      transform: rotate(90deg) translate(0, -30%);
+      transition: 0.5s;
+    }
+    .active &::before {
+      top: 50%;
+      right: 35%;
+      transform: rotate(90deg) translate(0, -50%);
+      transition: 0.5s;
+    }
+  }
+}
+/*Добавляем класс active для анимации иконки бургера*/
+.active {
+  @media screen and (max-width: 750px) {
+    margin-right: 0;
+  }
+}
+
+.dark {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 .fund {
   background: url(../images/pics/header-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media screen and (max-width: 1250px) {
+    background-position: center;
+  }
+  @media screen and (max-width: 1050px) {
+    background: none;
+    background-color: rgba(255, 249, 217, 1);
+  }
 }
 .container-fund {
   max-width: 1208px;
@@ -62,14 +237,26 @@ a {
   height: 787px;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-content: flex-start;
+  @media screen and (max-width: 1050px) {
+    align-items: center;
+    height: 350px;
+  }
+  @media screen and (max-width: 450px) {
+    height: 420px;
+  }
 }
 .title__h1 {
   padding-top: 21.8%;
   padding-left: 2px;
   margin: 0;
   @extend%font-h2;
+  @media screen and (max-width: 1350px) {
+    font-size: 2em;
+  }
+  @media screen and (max-width: 1050px) {
+    padding-top: 10%;
+  }
 }
 .sub-title__h1 {
   font-family: "SNFBSTRD-handwritten";
@@ -77,6 +264,9 @@ a {
   font-size: 20px;
   letter-spacing: 0.05em;
   padding-top: 2%;
+  @media screen and (max-width: 1350px) {
+    font-size: 1em;
+  }
 }
 // .about {
 // }
@@ -85,7 +275,9 @@ a {
   justify-content: flex-start;
   align-items: center;
   @media screen and (max-width: 1250px) {
+    flex-direction: column-reverse;
     flex-wrap: wrap;
+    justify-content: center;
   }
 }
 .about__img-container {
@@ -93,9 +285,18 @@ a {
   padding-left: 2.2%;
   min-width: 590px;
   height: 733px;
+  @media screen and (max-width: 1250px) {
+    height: 70%;
+  }
+  @media screen and (max-width: 700px) {
+    min-width: 85vw;
+  }
 }
 .about__img {
   width: 94%;
+  @media screen and (max-width: 1250px) {
+    width: 80%;
+  }
 }
 .about-content {
   padding-top: 6%;
@@ -113,15 +314,25 @@ a {
   @extend%font-text;
   margin-bottom: 6%;
 }
+.about__text_right {
+  max-width: 708px;
+  @media screen and (max-width: 1250px) {
+    max-width: 90%;
+  }
+}
 .title__h4 {
   @extend%font-h4;
 }
 .about_sechond-part {
   padding-top: 0.5%;
   width: 51vw;
-
-  @media screen and (max-width: 1200px) {
-    width: 80vw;
+  @media screen and (max-width: 1250px) {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 95%;
   }
 }
 
