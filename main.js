@@ -41,14 +41,35 @@
 
 /*бургер меню*/
 // import { click } from "./src/assets/burger";
+const burger = document.querySelector(".burger");
+const headerNav = document.querySelector(".header-nav");
+const body = document.querySelector(".body");
+const dark = document.querySelector(".burger__dark");
+const ul = document.getElementsByClassName("header__a");
+
+function clickClose(e) {
+  document.querySelector(".active").classList.remove("active");
+  headerNav.classList.remove("header-nav__active");
+  body.classList.remove("no_scroll");
+  dark.classList.remove("dark");
+}
+
 function click(e) {
   e.preventDefault();
   this.classList.toggle("active");
-  document.querySelector(".header-list").classList.toggle("header-nav__active");
-  document.querySelector(".body").classList.toggle("no_scroll");
-  document.querySelector(".burger__dark").classList.toggle("dark");
+  headerNav.classList.toggle("header-nav__active");
+  body.classList.toggle("no_scroll");
+  dark.classList.toggle("dark");
+  if (burger.classList.contains("active")) {
+    Array.from(ul).forEach((element) => {
+      element.addEventListener("click", clickClose);
+    });
+    dark.addEventListener("click", clickClose);
+  }
 }
-document.querySelector(".burger").addEventListener("click", click);
+
+burger.addEventListener("click", click);
+
 import { database } from "./database.js";
 
 const listContainer = document.querySelector(".main__list");
