@@ -1,42 +1,31 @@
+function loadContentOnIndexPage() {
+    fetch('/load-content')
+        .then(response => {
+            console.log('Статус ответа:', response.status);
+            console.log('Тип контента:', response.headers.get('Content-Type'));
 
-/* логика модального окна начало */
-document.addEventListener('DOMContentLoaded', function () {
-    document.body.classList.add('modal-active');
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
 
-    function checkLogin() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        if (username === 'admin' && password === 'password') {
-            document.getElementById('loginModal').style.display = 'none';
-            document.body.classList.remove('modal-active');
-        } else {
-            alert('Неправильный логин или пароль');
-        }
-    }
-
-    window.checkLogin = checkLogin;
-});
-
-function saveContent() {
-    const title = document.getElementById('admin-title').innerText;
-    const content = document.getElementById('admin-content').innerText;
-
-
-    fetch('/save-content', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, content }),
-    })
-        .then(response => response.json())
+            // Проверяем, что это JSON
+            if (response.headers.get('Content-Type').includes('application/json')) {
+                return response.json();
+            } else {
+                throw new Error('Ожидался JSON, но был получен другой формат данных');
+            }
+        })
         .then(data => {
-            alert('Контент сохранён!');
+            console.log('Полученные данные:', data); // Проверьте, что это именно JSON
+            document.querySelectorAll('.editable').forEach((element, index) => {
+                if (data[`field_${index}`]) {
+                    element.innerText = data[`field_${index}`];
+                }
+            });
         })
         .catch(error => {
-            console.error('Ошибка:', error);
+            console.error('Ошибка при загрузке данных:', error);
         });
 }
 
-/* логика модального окна конец */
+document.addEventListener('DOMContentLoaded', loadContentOnIndexPage);

@@ -8,6 +8,7 @@
   line-height: 48px;
   letter-spacing: 0.06em;
 }
+
 %font-h4 {
   font-family: "Roboto";
   font-weight: 700;
@@ -16,6 +17,7 @@
   letter-spacing: 0.05em;
   color: #4e4c46;
 }
+
 %font-text {
   font-family: "Roboto";
   font-weight: 400;
@@ -35,12 +37,14 @@ h4 {
   width: 1440px;
   margin: 0 auto;
 }
+
 .container-header {
   margin-top: 3.2%;
   max-width: 1400px;
   display: flex;
   justify-content: flex-end;
 }
+
 .header-nav {
   min-width: 40%;
   font-weight: 400;
@@ -51,6 +55,7 @@ h4 {
     display: none;
   }
 }
+
 .header-list {
   color: --text-color-menu;
   display: flex;
@@ -58,9 +63,11 @@ h4 {
   align-items: center;
   gap: 12%;
 }
+
 a {
   text-decoration: none;
 }
+
 .header__btn {
   width: 102px;
   height: 46px;
@@ -69,16 +76,20 @@ a {
   border: none;
   color: var(--text-color-btn);
 }
+
 .fund {
   background: url(../images/pics/header-bg.png);
 }
+
 .container-fund {
   max-width: 1208px;
   margin: 0 auto 0 116px;
+
   @media screen and (max-width: 1350px) {
     margin: 0 auto 0 50px;
   }
 }
+
 .fund-content {
   height: 787px;
   display: flex;
@@ -86,12 +97,14 @@ a {
   // justify-content: center;
   align-content: flex-start;
 }
+
 .title__h1 {
   padding-top: 21.8%;
   padding-left: 2px;
   margin: 0;
   @extend%font-h2;
 }
+
 .sub-title__h1 {
   font-family: "SNFBSTRD-handwritten";
   font-weight: 400;
@@ -99,51 +112,63 @@ a {
   letter-spacing: 0.05em;
   padding-top: 2%;
 }
-.about {
-}
+
+// .about {}
+
 .about_first-part {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8%;
+
   @media screen and (max-width: 1250px) {
     flex-wrap: wrap;
   }
 }
+
 .about__img-container {
   min-width: 590px;
   height: 733px;
 }
+
 .about__img {
   width: 124%;
 }
+
 .about-content {
   padding-top: 6%;
   min-width: 50vw;
   height: 80%;
+
   @media screen and (max-width: 1200px) {
     height: 100%;
   }
 }
+
 .title__h2 {
   @extend%font-h2;
   margin-bottom: 7%;
 }
+
 .about__text {
   @extend%font-text;
   margin-bottom: 6%;
 }
+
 .title__h4 {
   @extend%font-h4;
 }
+
 .about_sechond-part {
   padding-top: 0.7%;
   width: 58vw;
 
   @media screen and (max-width: 1200px) {
     width: 80vw;
-  }  
-=======
+  }
+
+}
+
 .main {
   margin: 0 120px 0 120px;
   @include main(400, 24px);
