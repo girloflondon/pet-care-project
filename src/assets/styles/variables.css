@@ -3,21 +3,25 @@
   font-weight: 500;
   src: url(../fonts/Roboto/Roboto-Medium.ttf);
 }
+
 @font-face {
   font-family: "Roboto";
   font-weight: 400;
   src: url(../fonts/Roboto/Roboto-Regular.ttf);
 }
+
 @font-face {
   font-family: "Roboto";
   font-weight: 700;
   src: url(../fonts/Roboto/Roboto-Bold.ttf);
 }
+
 @font-face {
   font-family: "SNFBSTRD-handwritten";
   font-weight: 400;
   src: url(../fonts/SNFBSTRD_handwritten/SNFBSTRD_\ handwrite.ttf);
 }
+
 :root {
   --text-color-menu: rgba(0, 0, 0, 1);
   --text-color-btn: rgba(255, 255, 255, 1);
@@ -30,4 +34,6 @@
   --space-m: 1.25rem;
   --space-l: 1.5rem;
   --space-xl: 2.1875rem;
-}/*# sourceMappingURL=variables.css.map */
+}
+
+/*# sourceMappingURL=variables.css.map */
