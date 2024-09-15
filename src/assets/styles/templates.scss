@@ -59,7 +59,7 @@ body.modal-active {
 @mixin main($weight, $size) {
   font-size: $size;
   @include font-face("Roboto", $weight);
-  line-height: 33.1px;
+  line-height: 2.0688rem;
   letter-spacing: 0.05em;
   color: rgba(78, 76, 70, 1);
 }
@@ -67,9 +67,49 @@ body.modal-active {
 @mixin button($width) {
   width: $width;
   height: 44px;
-  font-size: 16px;
+  font-size: 1rem;
   border: none;
   border-radius: 10px;
   background-color: rgba(18, 76, 95, 1);
   color: rgba(255, 255, 255, 1);
+}
+
+%block-border {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+%font-nav {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+}
+
+%font-h2 {
+  font-family: "SNFBSTRD-handwritten";
+  font-weight: 400;
+  font-size: 2.2em;
+  line-height: 48px;
+  letter-spacing: 0.06em;
+}
+
+%font-h4 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 138%;
+  letter-spacing: 0.05em;
+  color: #4e4c46;
+}
+
+%font-text {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 137%;
+  letter-spacing: 0.05em;
+  color: #4e4c46;
 }

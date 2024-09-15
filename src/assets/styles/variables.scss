@@ -23,7 +23,6 @@
 }
 
 :root {
-
   --text-color-menu: rgba(0, 0, 0, 1);
   --text-color-btn: rgba(255, 255, 255, 1);
   --text-color-sub-header: rgba(131, 154, 169, 1);
@@ -33,8 +32,8 @@
   --btn-menu: rgba(18, 76, 95, 1);
   --line-color: rgba(199, 199, 199, 1);
 
-  --space-s: 16px;
-  --space-m: 20px;
-  --space-l: 24px;
-  --space-xl: 35px;
+  --space-s: 1rem;
+  --space-m: 1.25rem;
+  --space-l: 1.5rem;
+  --space-xl: 2.1875rem;
 }
