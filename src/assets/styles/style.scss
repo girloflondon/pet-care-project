@@ -17,6 +17,7 @@
   line-height: 48px;
   letter-spacing: 0.06em;
 }
+
 %font-h4 {
   font-family: "Roboto";
   font-weight: 700;
@@ -25,6 +26,7 @@
   letter-spacing: 0.05em;
   color: #4e4c46;
 }
+
 %font-text {
   font-family: "Roboto";
   font-weight: 400;
@@ -44,35 +46,44 @@ h2,
 h4 {
   margin: 0;
 }
+
 .body {
   width: 100%;
 }
+
 .common-container {
   max-width: 1440px;
   margin: 0 auto;
+
   @media screen and (max-width: 1300px) {
     width: 100%;
   }
+
   @media screen and (max-width: 700px) {
     text-align: center;
   }
 }
+
 .no_scroll {
   overflow: hidden;
 }
+
 .container-header {
   margin-top: 3.2%;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
+
 .header-nav {
   width: 40%;
   @extend%font-nav;
   text-transform: uppercase;
+
   @media screen and (max-width: 1300px) {
     font-size: 12px;
   }
+
   @media screen and (max-width: 750px) {
     margin: 0;
     padding: 0;
@@ -93,20 +104,24 @@ h4 {
     transform: translate(100%);
   }
 }
+
 .header-nav__active {
   @media screen and (max-width: 750px) {
     transform: translate(0%);
   }
 }
+
 .header-list {
   color: --text-color-menu;
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 12%;
+
   @media screen and (max-width: 1390px) {
     gap: 0;
   }
+
   @media screen and (max-width: 750px) {
     display: flex;
     flex-direction: column;
@@ -115,20 +130,26 @@ h4 {
     gap: 5vh;
   }
 }
+
 a {
   text-decoration: none;
   color: #000;
 }
+
 .header__a {
   border-bottom: 2px solid transparent;
-  transition: border-bottom 1s ease; /* Плавная анимация */
+  transition: border-bottom 1s ease;
+
+  /* Плавная анимация */
   &:hover {
     border-bottom: 2px solid var(--btn-menu);
   }
+
   &:active {
     color: var(--btn-menu);
   }
 }
+
 .header__btn {
   width: 102px;
   height: 46px;
@@ -139,18 +160,22 @@ a {
   color: var(--text-color-btn);
   line-height: 3em;
   transition: background-color 0.3s ease, opacity 0.3s ease;
+
   &:hover {
     cursor: pointer;
     opacity: 0.75;
   }
+
   &:active {
     background-color: rgba(18, 76, 95, 0.5);
   }
+
   @media screen and (max-width: 1300px) {
     font-size: 12px;
     max-width: 80px;
     height: 36px;
   }
+
   @media screen and (max-width: 750px) {
     font-size: 20px;
     max-width: 160px;
@@ -169,6 +194,7 @@ a {
   height: 22px;
   margin-bottom: 15px;
   margin-right: 15px;
+
   span {
     height: 2px;
     width: 100%;
@@ -184,12 +210,15 @@ a {
 
     background-color: var(--btn-menu);
   }
+
   &:before {
     top: 0;
   }
+
   &:after {
     bottom: 0;
   }
+
   &.active {
     span {
       @media screen and (max-width: 750px) {
@@ -197,6 +226,7 @@ a {
       }
     }
   }
+
   &.active {
     &::after {
       @media screen and (max-width: 750px) {
@@ -206,6 +236,7 @@ a {
       }
     }
   }
+
   &.active {
     &::before {
       @media screen and (max-width: 750px) {
@@ -221,6 +252,7 @@ a {
     z-index: 51;
   }
 }
+
 /*Добавляем класс active для анимации иконки бургера*/
 
 .dark {
@@ -233,150 +265,192 @@ a {
   background: rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
+
 .fund {
   background: url(../images/pics/header-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
+
   @media screen and (max-width: 1250px) {
     background-position: center;
   }
+
   @media screen and (max-width: 1050px) {
     background: none;
     background-color: rgba(255, 249, 217, 1);
   }
 }
+
 .container-fund {
   max-width: 1208px;
   margin: 0 auto 0 116px;
+
   @media screen and (max-width: 1350px) {
     margin: 0 auto 0 50px;
   }
+
   @media screen and (max-width: 700px) {
     margin: 0 auto;
   }
 }
+
 .fund-content {
   height: 787px;
   display: flex;
   flex-direction: column;
   align-content: flex-start;
+
   @media screen and (max-width: 1050px) {
     align-items: center;
     height: 350px;
   }
+
   @media screen and (max-width: 450px) {
-    height: 420px;
+    height: 350px;
+  }
+  @media screen and (max-width: 400px) {
+    height: 280px;
   }
 }
+
 .title__h1 {
   padding-top: 21.8%;
   padding-left: 2px;
   margin: 0;
   @extend%font-h2;
+
   @media screen and (max-width: 1350px) {
     font-size: 2em;
   }
+
   @media screen and (max-width: 1050px) {
     padding-top: 10%;
   }
+
   @media screen and (max-width: 400px) {
     font-size: 1.2em;
   }
 }
+
 .sub-title__h1 {
   font-family: "SNFBSTRD-handwritten";
   font-weight: 400;
   font-size: 20px;
   letter-spacing: 0.05em;
   padding-top: 2%;
+
   @media screen and (max-width: 1350px) {
-    font-size: 0.7em;
+    font-size: 1.2em;
   }
+
   @media screen and (max-width: 400px) {
     font-size: 0.8em;
   }
 }
+
 // .about {
 // }
 .about_first-part {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   @media screen and (max-width: 1250px) {
     flex-direction: column-reverse;
     flex-wrap: wrap;
     justify-content: center;
   }
+
   @media screen and (max-width: 700px) {
     padding-left: 3%;
   }
 }
+
 .about__img-container {
   padding-top: 3.5%;
   padding-left: 2.2%;
   min-width: 590px;
   height: 733px;
+
   @media screen and (max-width: 1250px) {
     height: 70%;
   }
+
   @media screen and (max-width: 700px) {
     min-width: 85vw;
   }
 }
+
 .about__img {
   width: 94%;
+
   @media screen and (max-width: 1250px) {
     width: 80%;
   }
 }
+
 .about__img-container_little {
   position: relative;
 }
+
 .about__img_little {
   position: absolute;
   top: -135px;
   left: 513px;
+
   @media screen and (max-width: 700px) {
     left: 70%;
   }
+
   @media screen and (max-width: 400px) {
     display: none;
   }
 }
+
 .about-content {
   padding-top: 6%;
   min-width: 50vw;
   height: 80%;
+
   @media screen and (max-width: 1200px) {
     height: 100%;
   }
 }
+
 .title__h2 {
   @extend%font-h2;
   margin-bottom: 7%;
+
   @media screen and (max-width: 400px) {
     font-size: 1.2em;
   }
 }
+
 .about__text {
   @extend%font-text;
   margin-bottom: 6%;
+
   @media screen and (max-width: 400px) {
     font-size: 0.8em;
   }
 }
+
 .about__text_right {
   max-width: 708px;
+
   @media screen and (max-width: 1250px) {
     max-width: 90%;
   }
 }
+
 .title__h4 {
   @extend%font-h4;
 }
+
 .about_sechond-part {
   padding-top: 0.5%;
   width: 51vw;
+
   @media screen and (max-width: 1250px) {
     margin: 0 auto;
     display: flex;
@@ -385,6 +459,7 @@ a {
     justify-content: flex-start;
     width: 95%;
   }
+
   @media screen and (max-width: 700px) {
     justify-content: center;
   }
@@ -856,8 +931,7 @@ a {
           .block1__text-block {
             display: grid;
             grid-template:
-              repeat(2, auto)
-              / 1fr;
+              repeat(2, auto) / 1fr;
 
             .block1__text1,
             .block1__text1-subheader,
@@ -904,6 +978,7 @@ a {
         justify-self: center;
         text-wrap: balance;
       }
+
       .footer-block1__text2 {
         margin-top: 1.25rem;
         font-size: 1rem;
@@ -944,4 +1019,66 @@ a {
       }
     }
   }
+}
+
+/* Стиль для модального окна начало */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px;
+  text-align: center;
+  @include font-face("Roboto", 50px);
+}
+
+.modal-content input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.modal-content button {
+  @include button(136px);
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  opacity: 0.75;
+}
+
+body.modal-active {
+  overflow: hidden;
+}
+
+/* Стиль для модального окна конец */
+
+.saveBtn__container {
+  margin-top: 3.2%;
+  margin-bottom: 3.2%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#saveBtn {
+  @include button(200px);
+  cursor: pointer;
+}
+
+#saveBtn:hover {
+  background-color: orange;
 }
