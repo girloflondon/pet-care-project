@@ -265,7 +265,10 @@ a {
     height: 350px;
   }
   @media screen and (max-width: 450px) {
-    height: 420px;
+    height: 350px;
+  }
+  @media screen and (max-width: 400px) {
+    height: 280px;
   }
 }
 .title__h1 {
@@ -290,7 +293,7 @@ a {
   letter-spacing: 0.05em;
   padding-top: 2%;
   @media screen and (max-width: 1350px) {
-    font-size: 0.7em;
+    font-size: 1.2em;
   }
   @media screen and (max-width: 400px) {
     font-size: 0.8em;
