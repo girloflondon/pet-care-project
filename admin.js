@@ -1,5 +1,3 @@
-
-/* логика модального окна начало */
 document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('modal-active');
 
@@ -17,11 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.checkLogin = checkLogin;
 });
-/* логика модального окна конец */
 
-
-
-/* логика кнопки сохранения */
 document.getElementById('saveBtn').addEventListener('click', () => {
     const editableElements = document.querySelectorAll('[contenteditable="true"]');
     const contentData = {};
@@ -47,7 +41,6 @@ document.getElementById('saveBtn').addEventListener('click', () => {
         })
         .then(data => {
             console.log('Данные успешно сохранены:', data);
-            // window.location.href = '/'; // Если нужно перезагрузить страницу
         })
         .catch(error => {
             console.error('Ошибка при сохранении данных:', error);
@@ -63,10 +56,9 @@ const forwardButton = document.getElementById("forward");
 
 let currentPage = 0;
 const itemsPerPage = 5;
-let lastDeletedFund = null; // Для хранения последнего удаленного фонда
-let lastDeletedIndex = null; // Для хранения индекса удаленного фонда
+let lastDeletedFund = null;
+let lastDeletedIndex = null;
 
-// Функция отображения фондов на странице
 function displayFunds(first, last) {
     listContainer.innerHTML = "";
     const itemsToShow = database.slice(first, last);
@@ -105,64 +97,50 @@ function displayFunds(first, last) {
       <button class="delete-btn">Удалить</button>
     `;
 
-        // Добавляем кнопку удаления и событие удаления элемента
         const deleteButton = listItem.querySelector(".delete-btn");
         deleteButton.addEventListener("click", () => {
-            deleteFund(index + first, listItem); // Удаление фонда
+            deleteFund(index + first, listItem);
         });
 
         listContainer.appendChild(listItem);
     });
 }
 
-// Функция удаления фонда
 function deleteFund(index, listItem) {
-    // Сохраняем удаленный фонд и его индекс
     lastDeletedFund = database[index];
     lastDeletedIndex = index;
 
-    database.splice(index, 1); // Удаление фонда из массива
-
-    // Создаём кнопку "Отмена" на месте удалённого фонда
+    database.splice(index, 1);
+    
     const undoButton = document.createElement('button');
     undoButton.textContent = 'Отмена';
     undoButton.classList.add('undo-btn');
 
-    // Добавляем обработчик для кнопки "Отмена"
     undoButton.addEventListener('click', () => {
         undoDelete(listItem, undoButton);
     });
-
-    // Заменяем содержимое удалённого фонда на кнопку "Отмена"
     listItem.innerHTML = '';
     listItem.appendChild(undoButton);
 }
 
-// Функция отмены удаления фонда
 function undoDelete(listItem, undoButton) {
     if (lastDeletedFund !== null && lastDeletedIndex !== null) {
-        // Восстанавливаем удаленный фонд на его прежнее место
         database.splice(lastDeletedIndex, 0, lastDeletedFund);
         const start = currentPage * itemsPerPage;
         const end = Math.min(start + itemsPerPage, database.length);
-        displayFunds(start, end); // Обновляем отображение после восстановления
-
-        // Удаляем кнопку "Отмена" после восстановления фонда
+        displayFunds(start, end);
         undoButton.remove();
         lastDeletedFund = null;
         lastDeletedIndex = null;
     }
 }
 
-// Изначальное отображение фондов
 displayFunds(0, itemsPerPage);
 
-// Кнопка "Показать все"
 allButton.addEventListener("click", () => {
     displayFunds(0, database.length);
 });
 
-// Кнопка "Вперед"
 forwardButton.addEventListener("click", () => {
     if ((currentPage + 1) * itemsPerPage < database.length) {
         currentPage++;
@@ -172,7 +150,6 @@ forwardButton.addEventListener("click", () => {
     }
 });
 
-// Кнопка "Назад"
 backButton.addEventListener("click", () => {
     if (currentPage > 0) {
         currentPage--;
