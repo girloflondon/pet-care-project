@@ -1,43 +1,33 @@
-/* логика модального окна начало */
-// document.addEventListener("DOMContentLoaded", function () {
-//   document.body.classList.add("modal-active");
+function loadContentOnIndexPage() {
+    fetch('/load-content')
+        .then(response => {
+            console.log('Статус ответа:', response.status);
+            console.log('Тип контента:', response.headers.get('Content-Type'));
 
-//   function checkLogin() {
-//     const username = document.getElementById("username").value;
-//     const password = document.getElementById("password").value;
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
 
-//     if (username === "admin" && password === "password") {
-//       document.getElementById("loginModal").style.display = "none";
-//       document.body.classList.remove("modal-active");
-//     } else {
-//       alert("Неправильный логин или пароль");
-//     }
-//   }
-
-//   window.checkLogin = checkLogin;
-// });
-
-// function saveContent() {
-//     const title = document.getElementById('admin-title').innerText;
-//     const content = document.getElementById('admin-content').innerText;
-
-//     fetch('/save-content', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ title, content }),
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             alert('Контент сохранён!');
-//         })
-//         .catch(error => {
-//             console.error('Ошибка:', error);
-//         });
-// }
-
-/* логика модального окна конец */
+            // Проверяем, что это JSON
+            if (response.headers.get('Content-Type').includes('application/json')) {
+                return response.json();
+            } else {
+                throw new Error('Ожидался JSON, но был получен другой формат данных');
+            }
+        })
+        .then(data => {
+            console.log('Полученные данные:', data); // Проверьте, что это именно JSON
+            document.querySelectorAll('.editable').forEach((element, index) => {
+                if (data[`field_${index}`]) {
+                    element.innerText = data[`field_${index}`];
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке данных:', error);
+        });
+}
+document.addEventListener('DOMContentLoaded', loadContentOnIndexPage);
 
 /*бургер меню*/
 // import { click } from "./src/assets/burger";
@@ -48,24 +38,24 @@ const dark = document.querySelector(".burger__dark");
 const ul = document.getElementsByClassName("header__a");
 
 function clickClose(e) {
-  document.querySelector(".active").classList.remove("active");
-  headerNav.classList.remove("header-nav__active");
-  body.classList.remove("no_scroll");
-  dark.classList.remove("dark");
+    document.querySelector(".active").classList.remove("active");
+    headerNav.classList.remove("header-nav__active");
+    body.classList.remove("no_scroll");
+    dark.classList.remove("dark");
 }
 
 function click(e) {
-  e.preventDefault();
-  this.classList.toggle("active");
-  headerNav.classList.toggle("header-nav__active");
-  body.classList.toggle("no_scroll");
-  dark.classList.toggle("dark");
-  if (burger.classList.contains("active")) {
-    Array.from(ul).forEach((element) => {
-      element.addEventListener("click", clickClose);
-    });
-    dark.addEventListener("click", clickClose);
-  }
+    e.preventDefault();
+    this.classList.toggle("active");
+    headerNav.classList.toggle("header-nav__active");
+    body.classList.toggle("no_scroll");
+    dark.classList.toggle("dark");
+    if (burger.classList.contains("active")) {
+        Array.from(ul).forEach((element) => {
+            element.addEventListener("click", clickClose);
+        });
+        dark.addEventListener("click", clickClose);
+    }
 }
 
 burger.addEventListener("click", click);
@@ -81,14 +71,14 @@ let currentPage = 0;
 const itemsPerPage = 5;
 
 function displayFunds(first, last) {
-  listContainer.innerHTML = "";
-  const itemsToShow = database.slice(first, last);
+    listContainer.innerHTML = "";
+    const itemsToShow = database.slice(first, last);
 
-  itemsToShow.forEach((item) => {
-    const listItem = document.createElement("div");
-    listItem.classList.add("main__list-item");
+    itemsToShow.forEach((item) => {
+        const listItem = document.createElement("div");
+        listItem.classList.add("main__list-item");
 
-    listItem.innerHTML = `
+        listItem.innerHTML = `
       <div class="list-item__header">
         <img
           class="list-item__header-image"
@@ -116,30 +106,30 @@ function displayFunds(first, last) {
         <button class="block2__button"></button>
       </div>
     `;
-    listContainer.appendChild(listItem);
-  });
+        listContainer.appendChild(listItem);
+    });
 }
 
 displayFunds(0, itemsPerPage);
 
 allButton.addEventListener("click", () => {
-  displayFunds(0, database.length);
+    displayFunds(0, database.length);
 });
 
 forwardButton.addEventListener("click", () => {
-  if ((currentPage + 1) * itemsPerPage < database.length) {
-    currentPage++;
-    const start = currentPage * itemsPerPage;
-    const end = Math.min(start + itemsPerPage, database.length);
-    displayFunds(start, end);
-  }
+    if ((currentPage + 1) * itemsPerPage < database.length) {
+        currentPage++;
+        const start = currentPage * itemsPerPage;
+        const end = Math.min(start + itemsPerPage, database.length);
+        displayFunds(start, end);
+    }
 });
 
 backButton.addEventListener("click", () => {
-  if (currentPage > 0) {
-    currentPage--;
-    const start = currentPage * itemsPerPage;
-    const end = start + itemsPerPage;
-    displayFunds(start, end);
-  }
+    if (currentPage > 0) {
+        currentPage--;
+        const start = currentPage * itemsPerPage;
+        const end = start + itemsPerPage;
+        displayFunds(start, end);
+    }
 });
