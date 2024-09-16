@@ -8,7 +8,6 @@ function loadContentOnIndexPage() {
                 throw new Error(`Ошибка HTTP: ${response.status}`);
             }
 
-            // Проверяем, что это JSON
             if (response.headers.get('Content-Type').includes('application/json')) {
                 return response.json();
             } else {
@@ -16,7 +15,7 @@ function loadContentOnIndexPage() {
             }
         })
         .then(data => {
-            console.log('Полученные данные:', data); // Проверьте, что это именно JSON
+            console.log('Полученные данные:', data);
             document.querySelectorAll('.editable').forEach((element, index) => {
                 if (data[`field_${index}`]) {
                     element.innerText = data[`field_${index}`];
@@ -29,8 +28,6 @@ function loadContentOnIndexPage() {
 }
 document.addEventListener('DOMContentLoaded', loadContentOnIndexPage);
 
-/*бургер меню*/
-// import { click } from "./src/assets/burger";
 const burger = document.querySelector(".burger");
 const headerNav = document.querySelector(".header-nav");
 const body = document.querySelector(".body");
