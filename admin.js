@@ -181,3 +181,69 @@ backButton.addEventListener("click", () => {
         displayFunds(start, end);
     }
 });
+
+// Изначальные ссылки
+let socialLinks = {
+    facebook: 'https://facebook.com',
+    instagram: 'https://instagram.com'
+};
+
+// Привязка действий к кнопкам
+document.getElementById('facebook-btn').addEventListener('click', function () {
+    window.open(socialLinks.facebook, '_blank');
+});
+
+document.getElementById('instagram-btn').addEventListener('click', function () {
+    window.open(socialLinks.instagram, '_blank');
+});
+
+// Логика для добавления новой ссылки
+document.getElementById('add-facebook-link').addEventListener('click', function () {
+    addLinkInput('facebook');
+});
+
+document.getElementById('add-instagram-link').addEventListener('click', function () {
+    addLinkInput('instagram');
+});
+
+function addLinkInput(platform) {
+    const linkDiv = document.getElementById('social-links');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = `Введите ссылку на ${platform}`;
+
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Сохранить';
+
+    saveButton.addEventListener('click', function () {
+        const newLink = input.value;
+        if (newLink) {
+            saveLink(platform, newLink);
+        }
+    });
+
+    linkDiv.appendChild(input);
+    linkDiv.appendChild(saveButton);
+}
+
+function saveLink(platform, link) {
+    fetch('/save-link', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ platform, link }),  // Убедитесь, что передаются обе переменные
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка при сохранении ссылки');
+            }
+            return response.json();  // Ожидаем корректный JSON ответ от сервера
+        })
+        .then(data => {
+            console.log('Ссылка сохранена:', data.message);
+        })
+        .catch(error => {
+            console.error('Ошибка при сохранении ссылки:', error);
+        });
+}
