@@ -133,3 +133,58 @@ backButton.addEventListener("click", () => {
         displayFunds(start, end);
     }
 });
+
+let socialLinks = [];
+function loadSocialLinks() {
+    console.log('Начинаем загрузку ссылок...');
+
+    fetch('/load-links')
+        .then(response => {
+            console.log('Ответ от сервера:', response);
+
+            if (!response.ok) {
+                console.error('Ответ не OK. Статус:', response.status);
+                throw new Error('Ошибка загрузки ссылок: неверный ответ сервера.');
+            }
+
+            const contentType = response.headers.get('Content-Type');
+            console.log('Content-Type заголовок:', contentType);
+
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error(`Ожидался JSON, но получен ${contentType}`);
+            }
+
+            return response.json();
+        })
+        .then(socialLinks => {
+            console.log('Полученные ссылки:', socialLinks);
+            if (!Array.isArray(socialLinks)) {
+                throw new Error('Неверный формат данных. Ожидался массив.');
+            }
+
+            displaySocialLinks(socialLinks);
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке или отображении ссылок:', error);
+        });
+}
+
+function displaySocialLinks(socialLinks) {
+    socialLinks.forEach(link => {
+        console.log(`Обработка ссылки для платформы: ${link.platform}`);
+
+        const buttonId = link.platform === 'facebook' ? 'facebook-btn' : 'instagram-btn';
+        const button = document.getElementById(buttonId);
+
+        if (button) {
+            button.addEventListener('click', () => {
+                window.open(link.link, '_blank');
+            });
+            console.log(`Кнопка для ${link.platform} успешно настроена.`);
+        } else {
+            console.error(`Кнопка для ${link.platform} не найдена на странице.`);
+        }
+    });
+}
+
+loadSocialLinks();

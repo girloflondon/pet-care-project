@@ -92,7 +92,78 @@ app.post('/delete-fund', (req, res) => {
         res.status(500).json({ message: 'Ошибка при удалении фонда' });
     }
 });
+//
+app.post('/save-link', (req, res) => {
+    const { platform, link } = req.body;
 
+    if (!platform || !link) {
+        return res.status(400).json({ message: 'Некорректные данные' });
+    }
+
+    // Предположим, что вы храните ссылки в отдельном файле или объекте
+    const filePath = path.join(__dirname, 'savedLinks.json');  // Путь к файлу с сохранёнными ссылками
+
+    // Загружаем текущие сохранённые ссылки
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Ошибка при чтении файла ссылок:', err);
+            return res.status(500).json({ message: 'Ошибка при чтении файла ссылок' });
+        }
+
+        let links = [];
+        try {
+            links = JSON.parse(data);  // Парсим существующие ссылки
+        } catch (parseError) {
+            console.error('Ошибка при парсинге файла ссылок:', parseError);
+        }
+
+        // Обновляем или добавляем новую ссылку
+        links = links.filter(l => l.platform !== platform);  // Удаляем предыдущую ссылку для этой платформы
+        links.push({ platform, link });  // Добавляем новую ссылку
+
+        // Сохраняем обновлённые ссылки в файл
+        fs.writeFile(filePath, JSON.stringify(links, null, 2), (err) => {
+            if (err) {
+                console.error('Ошибка при сохранении файла ссылок:', err);
+                return res.status(500).json({ message: 'Ошибка при сохранении ссылки' });
+            }
+
+            res.json({ message: 'Ссылка успешно сохранена' });
+        });
+    });
+});
+app.get('/load-links', (req, res) => {
+    console.log('Маршрут /load-links вызван');
+    const filePath = path.join(__dirname, 'savedLinks.json');
+
+    console.log('Путь к файлу ссылок:', filePath);
+
+    if (fs.existsSync(filePath)) {
+        console.log('Файл найден, начинаем чтение...');
+
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Ошибка при чтении файла ссылок:', err);
+                return res.status(500).json({ message: 'Ошибка при загрузке ссылок' });
+            }
+
+            try {
+                const parsedData = JSON.parse(data);
+                console.log('Отправляемые данные:', parsedData);
+
+                // Убедимся, что заголовок JSON
+                res.setHeader('Content-Type', 'application/json');
+                res.status(200).json(parsedData);
+            } catch (parseError) {
+                console.error('Ошибка при парсинге JSON:', parseError);
+                res.status(500).json({ message: 'Ошибка при парсинге данных' });
+            }
+        });
+    } else {
+        console.error('Файл не найден');
+        res.status(404).json({ message: 'Файл не найден' });
+    }
+});
 // ===================== Обслуживание файлов =====================
 
 // Статические файлы из assets
