@@ -370,7 +370,12 @@ a {
 }
 @media screen and (max-width: 450px) {
   .fund-content {
-    height: 420px;
+    height: 350px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .fund-content {
+    height: 280px;
   }
 }
 
@@ -404,7 +409,7 @@ a {
 }
 @media screen and (max-width: 1350px) {
   .sub-title__h1 {
-    font-size: 0.7em;
+    font-size: 1.2em;
   }
 }
 @media screen and (max-width: 400px) {

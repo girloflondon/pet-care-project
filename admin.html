@@ -17,140 +17,145 @@
                 <h2>Введите логин и пароль</h2>
                 <input type="text" id="username" placeholder="Логин" required>
                 <input type="password" id="password" placeholder="Пароль" required>
-                <button onclick="checkLogin()">Войти</button>
+                <button class="loginButton">Войти</button>
             </div>
         </div>
-        <div class="burger__dark"></div>
+    </div>
+    <div class="burger__dark"></div>
+    <div class="common-container">
+        <header>
+            <div class="container-header">
+                <nav class="header-nav">
+                    <ul class="header-list">
+                        <li><a class="header__a a_one" href="#about-fund">О нас</a></li>
+                        <li><a class="header__a a_two" href="#contacts">Контакты</a></li>
+                        <li><a class="header__a a_three" href="#our-funds">Наши фонды</a></li>
+                        <li><button class="header__a header__btn">Поиск</button></li>
+                    </ul>
+                </nav>
+                <div class="burger">
+                    <span></span>
+                </div>
+            </div>
+        </header>
+    </div>
+    <main class="main">
         <div class="common-container">
-            <header>
-                <div class="container-header">
-                    <nav class="header-nav">
-                        <ul class="header-list">
-                            <li><a class="header__a a_one" href="#about-fund">О нас</a></li>
-                            <li><a class="header__a a_two" href="#contacts">Контакты</a></li>
-                            <li><a class="header__a a_three" href="#our-funds">Наши фонды</a></li>
-                            <li><button class="header__a header__btn">Поиск</button></li>
-                        </ul>
-                    </nav>
-                    <div class="burger">
-                        <span></span>
+            <section class="fund">
+                <div class="container-fund">
+                    <div class="fund-content">
+                        <h1 class="title__h1" contenteditable="true">Фонды помощи <br>бездомным животным <br>в
+                            Калининградской области</h1>
+                        <p class="sub-title__h1" contenteditable="true">мы хотим, чтобы животные были счастливы!</p>
                     </div>
                 </div>
-            </header>
-        </div>
-        <main class="main">
-            <div class="common-container">
-                <section class="fund">
-                    <div class="container-fund">
-                        <div class="fund-content">
-                            <h1 class="title__h1" contenteditable="true">Фонды помощи <br>бездомным животным <br>в
-                                Калининградской области</h1>
-                            <p class="sub-title__h1" contenteditable="true">мы хотим, чтобы животные были счастливы!</p>
-                        </div>
-                    </div>
-                </section>
-                <section id="about-fund" class="about">
-                    <div class="container-fund">
-                        <div class="about_first-part">
-                            <div class="about__img-container">
-                                <img class="about__img" src="src/assets/images/pics/main-side-img.png" alt="dog">
-                            </div>
-                            <div class="about-content">
-                                <h2 class="title__h2" contenteditable="true">О ФОНДЕ</h2>
-                                <div class="about__img-container_little">
-                                    <img class="about__img_little" src="./src/assets/images/pics/paw.png" alt="лапка">
-                                </div>
-                                <p class="about__text about__text_right" contenteditable="true">Добро пожаловать в наш
-                                    благотворительный
-                                    проект, посвященный
-                                    помощи животным в
-                                    Калининградской области!
-                                    Мы объединили усилия для создания уникального ресурса, где собраны контакты всех
-                                    благотворительных
-                                    организаций и инициатив, работающих в сфере защиты и помощи животным.
-                                </p>
-                                <h4 class="title__h4" contenteditable="true">Цели проекта:</h4>
-                                <p class="about__text about__text_right" contenteditable="true">- Создание сообщества:
-                                    Мы хотим объединить
-                                    всех, кто неравнодушен
-                                    к судьбе
-                                    бездомных
-                                    животных, чтобы вместе оказывать поддержку и помощь. <br>
-                                    - Информирование и просвещение: На нашем сайте вы найдете информацию о различных
-                                    проектах, акциях и
-                                    возможностях волонтерства. <br>
-                                    - Сбор средств: Мы организуем событийные мероприятия и кампании по сбору средств для
-                                    помощи приютам и
-                                    отдельным животным, нуждающимся в помощи
-                                </p>
-                            </div>
-                        </div>
-                        <div class="about_sechond-part">
-                            <h4 class="title__h4" contenteditable="true">Почему это важно?</h4>
-                            <p class="about__text" contenteditable="true">Каждый день животные в нашем регионе
-                                сталкиваются с трудностями, и
-                                нам нужна ваша
-                                помощь, чтобы улучшить их
-                                жизнь. Объединив усилия, мы можем сделать мир лучше для братьев наших меньших.</p>
-                            <h4 class="title__h4" contenteditable="true">Как вы можете помочь?</h4>
-                            <p class="about__text" contenteditable="true">- Поддерживайте и делитесь информацией о нашем
-                                проекте. <br>
-                                - Присоединяйтесь к волонтерским инициативам и помогайте в уходе за животными. <br>
-                                - Делайте пожертвования на развитие проектов, которые вам близки.</p>
-                            <p class="about__text" contenteditable="true">Давайте вместе сделаем Калининградскую область
-                                местом, где каждый
-                                животный чувствует
-                                заботу и любовь! Ваш
-                                вклад имеет значение!</p>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <section class="main__container1">
-                <div id="our-funds" class="main__container2">
-                    <div class="main__navigation">
-                        <h2 class="main-navigation__header" contenteditable="true">Наши фонды</h2>
-                        <div class="main-navigation__block">
-                            <button id="all" class="main-navigation__button1">
-                                Все страницы
-                            </button>
-                            <button id="back" class="main-navigation__button2"></button>
-                            <button id="forward" class="main-navigation__button3"></button>
-                        </div>
-                    </div>
-                    <div class="main__list">
-                    </div>
             </section>
-        </main>
-        <footer id="contacts" class="footer">
-            <div class="container__footer">
-                <div class="footer__block1">
-                    <div class="footer-block1__item1">
-                        <p class="footer-block1__item1-text1" contenteditable="true">
-                            Все интересные события проекта
-                        </p>
-                        <p class="footer-block1__item1-text2" contenteditable="true">— в наших социальных сетях</p>
+            <section id="about-fund" class="about">
+                <div class="container-fund">
+                    <div class="about_first-part">
+                        <div class="about__img-container">
+                            <img class="about__img" src="src/assets/images/pics/main-side-img.png" alt="dog">
+                        </div>
+                        <div class="about-content">
+                            <h2 class="title__h2" contenteditable="true">О ФОНДЕ</h2>
+                            <div class="about__img-container_little">
+                                <img class="about__img_little" src="./src/assets/images/pics/paw.png" alt="лапка">
+                            </div>
+                            <p class="about__text about__text_right" contenteditable="true">Добро пожаловать в наш
+                                благотворительный
+                                проект, посвященный
+                                помощи животным в
+                                Калининградской области!
+                                Мы объединили усилия для создания уникального ресурса, где собраны контакты всех
+                                благотворительных
+                                организаций и инициатив, работающих в сфере защиты и помощи животным.
+                            </p>
+                            <h4 class="title__h4" contenteditable="true">Цели проекта:</h4>
+                            <p class="about__text about__text_right" contenteditable="true">- Создание сообщества:
+                                Мы хотим объединить
+                                всех, кто неравнодушен
+                                к судьбе
+                                бездомных
+                                животных, чтобы вместе оказывать поддержку и помощь. <br>
+                                - Информирование и просвещение: На нашем сайте вы найдете информацию о различных
+                                проектах, акциях и
+                                возможностях волонтерства. <br>
+                                - Сбор средств: Мы организуем событийные мероприятия и кампании по сбору средств для
+                                помощи приютам и
+                                отдельным животным, нуждающимся в помощи
+                            </p>
+                        </div>
                     </div>
-                    <p class="footer-block1__text2" contenteditable="true">Контакты</p>
-                    <div class="footer-block1__item2" id="social-links">
-                        <button class="footer-block1__button1" id="facebook-btn"></button>
-                        <button class="footer-block1__button2" id="instagram-btn"></button>
-
-                        <button id="add-facebook-link">Добавить ссылку Facebook</button>
-                        <button id="add-instagram-link">Добавить ссылку Instagram</button>
+                    <div class="about_sechond-part">
+                        <h4 class="title__h4" contenteditable="true">Почему это важно?</h4>
+                        <p class="about__text" contenteditable="true">Каждый день животные в нашем регионе
+                            сталкиваются с трудностями, и
+                            нам нужна ваша
+                            помощь, чтобы улучшить их
+                            жизнь. Объединив усилия, мы можем сделать мир лучше для братьев наших меньших.</p>
+                        <h4 class="title__h4" contenteditable="true">Как вы можете помочь?</h4>
+                        <p class="about__text" contenteditable="true">- Поддерживайте и делитесь информацией о нашем
+                            проекте. <br>
+                            - Присоединяйтесь к волонтерским инициативам и помогайте в уходе за животными. <br>
+                            - Делайте пожертвования на развитие проектов, которые вам близки.</p>
+                        <p class="about__text" contenteditable="true">Давайте вместе сделаем Калининградскую область
+                            местом, где каждый
+                            животный чувствует
+                            заботу и любовь! Ваш
+                            вклад имеет значение!</p>
                     </div>
-                    <p class="footer-block1__text3" contenteditable="true">+7-911-999-99-99</p>
                 </div>
-                <div class="footer__block2">
-                    <p class="footer-block2__text1">&#169;все права защищены</p>
-                    <p class="footer-block2__text2">2024</p>
-                </div>
-            </div>
-        </footer>
-        <div class="saveBtn__container">
-            <button id="saveBtn">Сохранить изменения</button>
+            </section>
         </div>
-        <script type="module" src="/admin.js"></script>
+        <section class="main__container1">
+            <div id="our-funds" class="main__container2">
+                <div class="main__navigation">
+                    <h2 class="main-navigation__header" contenteditable="true">Наши фонды</h2>
+                    <div class="main-navigation__block">
+                        <button id="all" class="main-navigation__button1">
+                            Все страницы
+                        </button>
+                        <button id="back" class="main-navigation__button2"></button>
+                        <button id="forward" class="main-navigation__button3"></button>
+                    </div>
+                    <div id="funds-container">
+                        <button id="add-fund-btn">Добавить фонд</button>
+                        <div id="list-container"></div>
+                    </div>
+                </div>
+                <div class="main__list">
+                </div>
+        </section>
+    </main>
+    <footer id="contacts" class="footer">
+        <div class="container__footer">
+            <div class="footer__block1">
+                <div class="footer-block1__item1">
+                    <p class="footer-block1__item1-text1" contenteditable="true">
+                        Все интересные события проекта
+                    </p>
+                    <p class="footer-block1__item1-text2" contenteditable="true">— в наших социальных сетях</p>
+                </div>
+                <p class="footer-block1__text2" contenteditable="true">Контакты</p>
+                <div class="footer-block1__item2" id="social-links">
+                    <button class="footer-block1__button1" id="facebook-btn"></button>
+                    <button class="footer-block1__button2" id="instagram-btn"></button>
+
+                    <button id="add-facebook-link">Добавить ссылку Facebook</button>
+                    <button id="add-instagram-link">Добавить ссылку Instagram</button>
+                </div>
+                <p class="footer-block1__text3" contenteditable="true">+7-911-999-99-99</p>
+            </div>
+            <div class="footer__block2">
+                <p class="footer-block2__text1">&#169;все права защищены</p>
+                <p class="footer-block2__text2">2024</p>
+            </div>
+        </div>
+    </footer>
+    <div class="saveBtn__container">
+        <button id="saveBtn">Сохранить изменения</button>
+    </div>
+    <script type="module" src="/admin.js"></script>
 </body>
 
 </html>

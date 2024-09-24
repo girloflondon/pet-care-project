@@ -19,6 +19,21 @@ export default defineConfig({
                 target: 'http://localhost:3000',
                 changeOrigin: true,
             },
+            // Новый маршрут для загрузки фондов
+            '/get-funds': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
+            // Новый маршрут для сохранения фонда
+            '/save-fund': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
+            // Новый маршрут для удаления фонда
+            '/delete-fund': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
         },
     },
 });

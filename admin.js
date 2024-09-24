@@ -1,27 +1,32 @@
 
 /* логика модального окна начало */
+export function checkLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username === 'admin' && password === 'password') {
+        document.getElementById('loginModal').style.display = 'none';
+        document.body.classList.remove('modal-active');
+    } else {
+        alert('Неправильный логин или пароль');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('modal-active');
 
-    function checkLogin() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+    // Назначаем обработчик клика на кнопку после загрузки DOM
+    const loginButton = document.querySelector('.loginButton');
 
-        if (username === 'admin' && password === 'password') {
-            document.getElementById('loginModal').style.display = 'none';
-            document.body.classList.remove('modal-active');
-        } else {
-            alert('Неправильный логин или пароль');
-        }
+    if (loginButton) {
+        loginButton.addEventListener('click', checkLogin);
     }
-
-    window.checkLogin = checkLogin;
 });
+// window.checkLogin = checkLogin;
 /* логика модального окна конец */
 
 
-
-/* логика кнопки сохранения */
+// логика кнопки сохранения
 document.getElementById('saveBtn').addEventListener('click', () => {
     const editableElements = document.querySelectorAll('[contenteditable="true"]');
     const contentData = {};
@@ -32,6 +37,7 @@ document.getElementById('saveBtn').addEventListener('click', () => {
 
     console.log('Отправляемые данные:', contentData);
 
+    // Сохраняем контент
     fetch('/save-content', {
         method: 'POST',
         headers: {
@@ -47,19 +53,59 @@ document.getElementById('saveBtn').addEventListener('click', () => {
         })
         .then(data => {
             console.log('Данные успешно сохранены:', data);
+
+            // Собираем данные о фондах
+            const funds = [];
+            const fundElements = document.querySelectorAll('.main__list-item');
+
+            fundElements.forEach(item => {
+                const fundName = item.querySelector('.fundName').innerText.trim();
+                const fundType = item.querySelector('.fundType').nextSibling.nodeValue.trim(); // Используем `nextSibling` для получения значения
+                const fundYear = item.querySelector('.fundYear').nextSibling.nodeValue.trim(); // Аналогично
+                const fundDescription = item.querySelector('.fundDescription').innerText.trim();
+
+                const newFund = {
+                    name: fundName,
+                    type: fundType,
+                    year: fundYear,
+                    description: fundDescription
+                };
+
+                funds.push(newFund);
+            });
+
+            // Сохраняем все фонды
+            return fetch('/save-fund', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(funds)
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка при сохранении фонда');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Фонды успешно сохранены:', data);
             // window.location.href = '/'; // Если нужно перезагрузить страницу
         })
         .catch(error => {
-            console.error('Ошибка при сохранении данных:', error);
+            console.error('Ошибка при сохранении данных или фонда:', error);
         });
 });
 
+//фонды
 import { database } from "./database.js";
 
 const listContainer = document.querySelector(".main__list");
 const allButton = document.getElementById("all");
 const backButton = document.getElementById("back");
 const forwardButton = document.getElementById("forward");
+const addFundBtn = document.getElementById('add-fund-btn');
 
 let currentPage = 0;
 const itemsPerPage = 5;
@@ -76,34 +122,35 @@ function displayFunds(first, last) {
         listItem.classList.add("main__list-item");
 
         listItem.innerHTML = `
-      <div class="list-item__header">
-        <img
-          class="list-item__header-image"
-          src="./src/assets/images/icons/dog-cat-icon.svg"
-          alt="${item.name}"
-        />
-        <h4 class="list-item__header-title">${item.name}</h4>
-      </div>
-      <div class="list-item__block1">
-        <div class="block1__text-block">
-          <p class="block1__text1">
-            <span class="block1__text1-subheader">Тип: </span> ${item.type}
-          </p>
-          <p class="block1__text2">
-            <span class="block1__text2-subheader">Год: </span> ${item.year}
-          </p>
-        </div>
-        <span class="block1__element"></span>
-        <p class="block1__text">
-          ${item.description}
-        </p>
-      </div>
-      <div class="list-item__block2">
-        <p class="block2__text">Подробнее о фонде</p>
-        <button class="block2__button"></button>
-      </div>
-      <button class="delete-btn">Удалить</button>
-    `;
+            <div class="list-item__header">
+                <img
+                    class="list-item__header-image"
+                    src="./src/assets/images/icons/dog-cat-icon.svg"
+                    alt="${item.name}"
+                />
+                <h4 class="list-item__header-title fundName">${item.name}</h4>
+            </div>
+            <div class="list-item__block1">
+                <div class="block1__text-block">
+                    <p class="block1__text1">
+                        <span class="block1__text1-subheader fundType">Тип: </span> ${item.type}
+                    </p>
+                    <p class="block1__text2">
+                        <span class="block1__text2-subheader fundYear">Год: </span> ${item.year}
+                    </p>
+                </div>
+                <span class="block1__element"></span>
+                <p class="block1__text fundDescription">
+                    ${item.description}
+                </p>
+            </div>
+            <div class="list-item__block2">
+                <p class="block2__text">Подробнее о фонде</p>
+                <button class="block2__button"></button>
+            </div>
+            <button class="delete-btn">Удалить</button>
+        `;
+
 
         // Добавляем кнопку удаления и событие удаления элемента
         const deleteButton = listItem.querySelector(".delete-btn");
@@ -156,6 +203,58 @@ function undoDelete(listItem, undoButton) {
 
 // Изначальное отображение фондов
 displayFunds(0, itemsPerPage);
+
+// Добавление нового фонда
+function addNewFund() {
+    const newFundForm = document.createElement('div');
+    newFundForm.classList.add('new-fund-form');
+
+    newFundForm.innerHTML = `
+        <div>
+            <input type="text" placeholder="Название фонда" id="newFundName">
+        </div>
+        <div>
+            <input type="text" placeholder="Тип" id="newFundType">
+        </div>
+        <div>
+            <input type="number" placeholder="Год" id="newFundYear">
+        </div>
+        <div>
+            <textarea placeholder="Описание" id="newFundDescription"></textarea>
+        </div>
+        <button id="save-new-fund-btn">OK</button>
+    `;
+
+    listContainer.insertBefore(newFundForm, listContainer.firstChild);
+
+    const saveNewFundBtn = document.getElementById('save-new-fund-btn');
+    saveNewFundBtn.addEventListener('click', () => {
+        const name = document.getElementById('newFundName').value;
+        const type = document.getElementById('newFundType').value;
+        const year = document.getElementById('newFundYear').value;
+        const description = document.getElementById('newFundDescription').value;
+
+        if (name && type && year && description) {
+            const newFund = {
+                name,
+                type,
+                year,
+                description
+            };
+
+            database.unshift(newFund); // Добавляем новый фонд в начало массива
+            displayFunds(0, itemsPerPage); // Обновляем отображение
+        }
+
+        // Удаляем форму после добавления фонда
+        newFundForm.remove();
+    });
+}
+
+// Кнопка "Добавить фонд"
+addFundBtn.addEventListener('click', () => {
+    addNewFund();
+});
 
 // Кнопка "Показать все"
 allButton.addEventListener("click", () => {
