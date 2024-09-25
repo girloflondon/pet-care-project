@@ -15,7 +15,7 @@ export function checkLogin() {
 document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('modal-active');
 
-    // Назначаем обработчик клика на кнопку после загрузки DOM
+    // это надо
     const loginButton = document.querySelector('.loginButton');
 
     if (loginButton) {
@@ -28,18 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Логика кнопки сохранения
 document.getElementById('saveBtn').addEventListener('click', () => {
-    // Получаем все элементы с атрибутом contenteditable="true"
+
     const editableElements = document.querySelectorAll('[contenteditable="true"]');
     const contentData = {};
 
-    // Проходим по каждому редактируемому элементу и сохраняем его содержимое
     editableElements.forEach((element, index) => {
         contentData[`field_${index}`] = element.innerText.trim();
     });
 
     console.log('Отправляемые данные:', contentData);
 
-    // Отправляем данные на сервер
+    // данные на сервер
     fetch('/save-content', {
         method: 'POST',
         headers: {
@@ -55,7 +54,7 @@ document.getElementById('saveBtn').addEventListener('click', () => {
         })
         .then(data => {
             console.log('Данные успешно сохранены:', data);
-            // Здесь можно выполнить дополнительные действия, если необходимо
+
         })
         .catch(error => {
             console.error('Ошибка при сохранении данных:', error);
@@ -69,14 +68,14 @@ const backButton = document.getElementById("back");
 const forwardButton = document.getElementById("forward");
 const addFundBtn = document.getElementById('add-fund-btn');
 
-let database = []; // Пустой массив для данных с сервера
+let database = []; // массив для серверных данных 
 let currentPage = 0;
 const itemsPerPage = 5;
 
-// Функция отображения фондов на странице
+// етображение фондов 
 function displayFunds(first, last) {
-    listContainer.innerHTML = ""; // Очищаем контейнер для фондов
-    const itemsToShow = database.slice(first, last); // Получаем необходимые элементы из базы данных
+    listContainer.innerHTML = "";
+    const itemsToShow = database.slice(first, last);
 
     itemsToShow.forEach((item, index) => {
         const listItem = document.createElement("div");
@@ -112,19 +111,19 @@ function displayFunds(first, last) {
             <button class="delete-btn">Удалить</button>
         `;
 
-        // Добавляем кнопку удаления и событие удаления элемента
+        // событие удаления элемента
         const deleteButton = listItem.querySelector(".delete-btn");
         deleteButton.addEventListener("click", () => {
-            deleteFund(index + first, listItem); // Удаление фонда
+            deleteFund(index + first, listItem);
         });
 
-        listContainer.appendChild(listItem); // Добавляем элемент в контейнер
+        listContainer.appendChild(listItem);
     });
 }
 
-// Функция для загрузки базы данных с сервера
+// загрузка базы данных с сервера
 function loadDatabase() {
-    fetch('http://localhost:3000/get-funds')  // Заменить URL на реальный адрес API
+    fetch('http://localhost:3000/get-funds')  // тут тоже будет другое
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных');
@@ -132,36 +131,35 @@ function loadDatabase() {
             return response.json();
         })
         .then(data => {
-            database = data; // Записываем полученные данные в переменную
-            displayFunds(0, itemsPerPage); // Отображаем первую страницу
+            database = data;
+            displayFunds(0, itemsPerPage);
         })
         .catch(error => {
             console.error('Ошибка:', error);
         });
 }
 
-// Загружаем данные при загрузке страницы
+// загрузка страницы с фондами
 loadDatabase();
 
-let lastDeletedFund = null; // Для хранения последнего удаленного фонда
-let lastDeletedIndex = null; // Для хранения индекса удаленного фонда
+let lastDeletedFund = null; // последний удаленный фонд
+let lastDeletedIndex = null; //индекс удаленного фонда
 
 // Функция удаления фонда
 function deleteFund(index, listItem) {
-    // Сохраняем удаленный фонд и его индекс
     lastDeletedFund = database[index];
     lastDeletedIndex = index;
 
-    // Удаление фонда из базы данных
+    // Удаление фонда из базы
     database.splice(index, 1);
 
-    // Отправляем запрос на сервер для удаления фонда
+    // сервер удаление
     fetch('/delete-fund', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ index }), // Отправляем индекс удаляемого фонда
+        body: JSON.stringify({ index }),
     })
         .then(response => response.json())
         .then(data => {
@@ -175,17 +173,17 @@ function deleteFund(index, listItem) {
             console.error('Ошибка при запросе на удаление фонда:', error);
         });
 
-    // Создаём кнопку "Отмена" на месте удалённого фонда
+    // "Отмена" на месте удалённого фонда
     const undoButton = document.createElement('button');
     undoButton.textContent = 'Отмена';
     undoButton.classList.add('undo-btn');
 
-    // Добавляем обработчик для кнопки "Отмена"
+    // обработчик
     undoButton.addEventListener('click', () => {
         undoDelete(listItem, undoButton);
     });
 
-    // Заменяем содержимое удалённого фонда на кнопку "Отмена"
+    // "Отмена" на месте содержимого
     listItem.innerHTML = '';
     listItem.appendChild(undoButton);
 }
@@ -193,16 +191,16 @@ function deleteFund(index, listItem) {
 // Функция отмены удаления фонда
 function undoDelete(listItem, undoButton) {
     if (lastDeletedFund !== null && lastDeletedIndex !== null) {
-        // Восстанавливаем удаленный фонд на его прежнее место в массиве
+        // Восстанавление
         database.splice(lastDeletedIndex, 0, lastDeletedFund);
 
-        // Отправляем запрос на сервер для восстановления фонда
+        // запрос на сервер для восстановления фонда
         fetch('/save-fund', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ ...lastDeletedFund, isRestoring: true, index: lastDeletedIndex }), // Отправляем данные фонда и индекс для восстановления
+            body: JSON.stringify({ ...lastDeletedFund, isRestoring: true, index: lastDeletedIndex }),
         })
             .then(response => response.json())
             .then(data => {
@@ -216,12 +214,12 @@ function undoDelete(listItem, undoButton) {
                 console.error('Ошибка при запросе на восстановление фонда:', error);
             });
 
-        // Обновляем отображение после восстановления фонда
+        //отображение после восстановления
         const start = currentPage * itemsPerPage;
         const end = Math.min(start + itemsPerPage, database.length);
         displayFunds(start, end);
 
-        // Удаляем кнопку "Отмена" после восстановления фонда
+        // Удаляем "Отмена"
         undoButton.remove();
         lastDeletedFund = null;
         lastDeletedIndex = null;
@@ -252,10 +250,10 @@ function addNewFund() {
         <button id="save-new-fund-btn">OK</button>
     `;
 
-    // Добавляем форму в начало списка
+    // в начало списка
     listContainer.insertBefore(newFundForm, listContainer.firstChild);
 
-    // Обработчик для кнопки сохранения нового фонда
+    // Обработчик 
     const saveNewFundBtn = document.getElementById('save-new-fund-btn');
     saveNewFundBtn.addEventListener('click', () => {
         const name = document.getElementById('newFundName').value.trim();
@@ -267,30 +265,28 @@ function addNewFund() {
             const newFund = {
                 name,
                 type,
-                year: parseInt(year), // Приводим год к числовому типу
+                year: parseInt(year), // не понятно, надо потестить
                 description
             };
 
-            // Проверяем на дубликаты перед добавлением в локальный массив
+            // Проверка на дубликаты
             const isDuplicate = database.some(fund => fund.name === newFund.name && fund.year === newFund.year);
             if (!isDuplicate) {
-                // Отправляем новый фонд на сервер
+
                 fetch('/save-fund', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(newFund), // Отправляем данные нового фонда
+                    body: JSON.stringify(newFund),
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.message === 'Фонд успешно сохранён') {
                             console.log('Новый фонд сохранен на сервере:', data.fund);
 
-                            // Добавляем новый фонд в локальный массив `database`
                             database.unshift(newFund);
 
-                            // Обновляем отображение, чтобы включить новый фонд
                             displayFunds(0, itemsPerPage);
                         } else {
                             console.error('Ошибка при сохранении фонда на сервере:', data.message);
@@ -300,7 +296,7 @@ function addNewFund() {
                         console.error('Ошибка при запросе на сохранение фонда:', error);
                     });
 
-                // Удаляем форму после попытки добавления фонда
+                // Удалить форму
                 newFundForm.remove();
             } else {
                 alert('Фонд с таким названием и годом уже существует!');
@@ -340,7 +336,7 @@ let socialLinks = {
     instagram: 'https://instagram.com'
 };
 
-// Привязка действий к кнопкам
+// кнопки чтоб работали
 document.getElementById('facebook-btn').addEventListener('click', function () {
     window.open(socialLinks.facebook, '_blank');
 });
@@ -349,7 +345,7 @@ document.getElementById('instagram-btn').addEventListener('click', function () {
     window.open(socialLinks.instagram, '_blank');
 });
 
-// Логика для добавления новой ссылки
+// Логика новой ссылки
 document.getElementById('add-facebook-link').addEventListener('click', function () {
     addLinkInput('facebook');
 });
@@ -384,13 +380,13 @@ function saveLink(platform, link) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ platform, link }),  // Убедитесь, что передаются обе переменные
+        body: JSON.stringify({ platform, link }),
     })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка при сохранении ссылки');
             }
-            return response.json();  // Ожидаем корректный JSON ответ от сервера
+            return response.json();
         })
         .then(data => {
             console.log('Ссылка сохранена:', data.message);

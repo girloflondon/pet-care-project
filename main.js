@@ -67,14 +67,14 @@ const backButton = document.getElementById("back");
 const forwardButton = document.getElementById("forward");
 const addFundBtn = document.getElementById('add-fund-btn');
 
-let database = []; // Пустой массив для данных с сервера
+let database = []; // массив для данных с сервера
 let currentPage = 0;
 const itemsPerPage = 5;
 
 // Функция для отображения фондов
 function displayFunds(first, last) {
-    listContainer.innerHTML = ""; // Очищаем контейнер
-    const itemsToShow = database.slice(first, last); // Получаем нужные элементы
+    listContainer.innerHTML = "";
+    const itemsToShow = database.slice(first, last);
 
     itemsToShow.forEach((item) => {
         const listItem = document.createElement("div");
@@ -114,7 +114,7 @@ function displayFunds(first, last) {
 
 // Функция для загрузки базы данных с сервера
 function loadDatabase() {
-    fetch('http://localhost:3000/get-funds')  // Заменить URL на реальный адрес API
+    fetch('http://localhost:3000/get-funds')  // тут будет что-то настоязее, но потом
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных');
@@ -122,8 +122,8 @@ function loadDatabase() {
             return response.json();
         })
         .then(data => {
-            database = data; // Записываем полученные данные в переменную
-            displayFunds(0, itemsPerPage); // Отображаем первую страницу
+            database = data;
+            displayFunds(0, itemsPerPage);
         })
         .catch(error => {
             console.error('Ошибка:', error);
@@ -155,7 +155,7 @@ backButton.addEventListener("click", () => {
     }
 });
 
-// Загружаем данные при загрузке страницы
+// Загрузка страницы
 loadDatabase();
 
 //ссылки

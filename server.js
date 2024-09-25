@@ -53,7 +53,7 @@ app.post('/save-content', (req, res) => {
     });
 });
 
-// Обработка GET-запроса для загрузки данных
+// Обработка GET-запроса для загрузки полей
 app.get('/load-content', (req, res) => {
     console.log('Маршрут /load-content вызван');
     console.log('Путь к файлу:', filePath);
@@ -61,7 +61,7 @@ app.get('/load-content', (req, res) => {
     try {
         const parsedData = loadData();
         console.log('Данные успешно считаны:', parsedData);  // Лог для проверки JSON
-        res.setHeader('Content-Type', 'application/json');  // Установим правильный заголовок
+        res.setHeader('Content-Type', 'application/json');  // заголовок
         res.status(200).json(parsedData);
     } catch (parseError) {
         console.error('Ошибка при чтении или парсинге файла:', parseError);
@@ -76,7 +76,7 @@ app.get('/get-funds', (req, res) => {
     console.log('Маршрут /get-funds вызван');
     console.log('Путь к файлу фондов:', databasePath);
 
-    // Проверяем существование файла
+    // существование файла
     if (fs.existsSync(databasePath)) {
         console.log('Файл найден, начинаем чтение...');
 
@@ -89,7 +89,7 @@ app.get('/get-funds', (req, res) => {
             try {
                 const parsedData = JSON.parse(data);
                 console.log('Отправляемые данные:', parsedData);
-                res.status(200).json(parsedData); // Отправляем данные в ответе
+                res.status(200).json(parsedData); // Отправляем данные
             } catch (parseError) {
                 console.error('Ошибка при парсинге файла фондов:', parseError);
                 res.status(500).json({ message: 'Ошибка при парсинге данных фондов' });
@@ -104,7 +104,7 @@ app.get('/get-funds', (req, res) => {
 app.post('/delete-fund', (req, res) => {
     const { index } = req.body;
 
-    // Чтение текущей базы данных фондов
+    // Чтение базы данных фондов
     fs.readFile(databasePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Ошибка при чтении файла фондов:', err);
@@ -121,7 +121,7 @@ app.post('/delete-fund', (req, res) => {
 
         // Удаление фонда по индексу
         if (index >= 0 && index < database.length) {
-            database.splice(index, 1); // Удаляем фонд
+            database.splice(index, 1);
         } else {
             return res.status(400).json({ message: 'Некорректный индекс фонда' });
         }
@@ -139,7 +139,7 @@ app.post('/delete-fund', (req, res) => {
 });
 app.post('/save-fund', (req, res) => {
     const newFund = req.body; // Получаем данные фонда для сохранения
-    const isRestoring = req.body.isRestoring || false; // Флаг для восстановления фонда
+    const isRestoring = req.body.isRestoring || false; // Флаг для восстановления фонда!!!
 
     // Чтение текущей базы данных фондов
     fs.readFile(databasePath, 'utf8', (err, data) => {
@@ -150,7 +150,7 @@ app.post('/save-fund', (req, res) => {
 
         let database = [];
         try {
-            database = JSON.parse(data); // Парсим JSON данные
+            database = JSON.parse(data);
         } catch (parseError) {
             console.error('Ошибка при парсинге файла фондов:', parseError);
             return res.status(500).json({ message: 'Ошибка при парсинге данных' });
@@ -184,10 +184,9 @@ app.post('/save-link', (req, res) => {
         return res.status(400).json({ message: 'Некорректные данные' });
     }
 
-    // Предположим, что вы храните ссылки в отдельном файле или объекте
     const filePath = path.join(__dirname, 'savedLinks.json');  // Путь к файлу с сохранёнными ссылками
 
-    // Загружаем текущие сохранённые ссылки
+    // Загружаем ссылки
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Ошибка при чтении файла ссылок:', err);
@@ -196,16 +195,16 @@ app.post('/save-link', (req, res) => {
 
         let links = [];
         try {
-            links = JSON.parse(data);  // Парсим существующие ссылки
+            links = JSON.parse(data);  // Парсим 
         } catch (parseError) {
             console.error('Ошибка при парсинге файла ссылок:', parseError);
         }
 
         // Обновляем или добавляем новую ссылку
-        links = links.filter(l => l.platform !== platform);  // Удаляем предыдущую ссылку для этой платформы
+        links = links.filter(l => l.platform !== platform);  // Удаляем предыдущую ссылку 
         links.push({ platform, link });  // Добавляем новую ссылку
 
-        // Сохраняем обновлённые ссылки в файл
+        // Сохраняем в файл
         fs.writeFile(filePath, JSON.stringify(links, null, 2), (err) => {
             if (err) {
                 console.error('Ошибка при сохранении файла ссылок:', err);
@@ -235,7 +234,7 @@ app.get('/load-links', (req, res) => {
                 const parsedData = JSON.parse(data);
                 console.log('Отправляемые данные:', parsedData);
 
-                // Убедимся, что заголовок JSON
+                // это тоже JSON
                 res.setHeader('Content-Type', 'application/json');
                 res.status(200).json(parsedData);
             } catch (parseError) {
@@ -263,7 +262,7 @@ app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
-// Обслуживание всех остальных файлов (корневые файлы, например стили или скрипты)
+// Обслуживание всех остальных файлов (корневые файлы, стили, скрипты картинки)
 app.use(express.static(rootPath));
 
 // Запуск сервера
