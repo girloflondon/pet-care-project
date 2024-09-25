@@ -1083,3 +1083,23 @@ body.modal-active {
 #saveBtn:hover {
   background-color: orange;
 }
+
+.delete-btn {
+  width: 100px;
+  height: 33px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(18, 76, 95, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.undo-btn {
+  width: 100px;
+  height: 33px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(18, 76, 95, 1);
+  color: rgba(255, 255, 255, 1);
+}

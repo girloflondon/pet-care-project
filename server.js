@@ -6,24 +6,24 @@ import { dirname } from 'path';
 import bodyParser from 'body-parser';  // Для обработки POST-запросов
 import fs from 'fs';  // Для работы с файловой системой
 
-// const bodyParser = require('body-parser');
-
-// Получаем путь к файлу и директорию
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 const app = express();
 const PORT = 3000;
 
+app.use(express.json());
 // Включаем CORS для всех запросов
 app.use(cors());
 // Для обработки JSON-запросов
 app.use(bodyParser.json());
 
+// Получаем путь к файлу и директорию
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 // Пути к папкам с файлами
 const assetsPath = path.join(__dirname, 'src', 'assets');
 const rootPath = __dirname;
-const databasePath = path.join(__dirname, 'database.js');
+const databasePath = path.join(__dirname, 'database.json');
 
 // Путь к файлу сохраненных данных
 const filePath = path.join(__dirname, 'savedContent.json');
@@ -37,7 +37,7 @@ function loadData() {
 }
 
 // ===================== API Роуты =====================
-
+// контент
 // Обработка POST-запроса на сохранение данных
 app.post('/save-content', (req, res) => {
     const contentData = req.body;
@@ -71,85 +71,111 @@ app.get('/load-content', (req, res) => {
 
 // фонды
 
-// Чтение базы данных из файла
-function readDatabase() {
-    const content = fs.readFileSync(databasePath, 'utf8');
-    const data = content.match(/export\s+const\s+database\s+=\s+(\[.*\]);/s);
-    return JSON.parse(data[1]);
-}
-
-// Запись обновлённого состояния базы данных в файл
-function writeDatabase(newData) {
-    const content = `export const database = ${JSON.stringify(newData, null, 2)};`;
-    fs.writeFileSync(databasePath, content, 'utf8');
-}
-
-// Маршрут для получения фондов
+// Маршрут для получения фондов (GET)
 app.get('/get-funds', (req, res) => {
-    try {
-        const database = readDatabase();
-        res.json(database);
-    } catch (err) {
-        console.error('Ошибка при чтении базы данных:', err);
-        res.status(500).json({ message: 'Ошибка при получении данных' });
+    console.log('Маршрут /get-funds вызван');
+    console.log('Путь к файлу фондов:', databasePath);
+
+    // Проверяем существование файла
+    if (fs.existsSync(databasePath)) {
+        console.log('Файл найден, начинаем чтение...');
+
+        fs.readFile(databasePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Ошибка при чтении файла фондов:', err);
+                return res.status(500).json({ message: 'Ошибка при загрузке данных фондов' });
+            }
+
+            try {
+                const parsedData = JSON.parse(data);
+                console.log('Отправляемые данные:', parsedData);
+                res.status(200).json(parsedData); // Отправляем данные в ответе
+            } catch (parseError) {
+                console.error('Ошибка при парсинге файла фондов:', parseError);
+                res.status(500).json({ message: 'Ошибка при парсинге данных фондов' });
+            }
+        });
+    } else {
+        console.error('Файл не найден');
+        res.status(404).json({ message: 'Файл фондов не найден' });
     }
 });
 
-// Обработчик POST-запроса для сохранения фондов
-app.post('/save-fund', (req, res) => {
-    const newFund = req.body; // Ожидаем объект фонда
-
-    // Логируем полученные данные для отладки
-    console.log('Полученные данные для сохранения фонда:', newFund);
-
-    // Проверка на наличие необходимых полей
-    if (!newFund.name || !newFund.type || !newFund.year || !newFund.description) {
-        return res.status(400).json({ error: 'Все поля должны быть заполнены' });
-    }
-
-    try {
-        // Читаем текущую базу данных
-        let database = readDatabase();
-
-        // Добавляем новый фонд в массив
-        database.push(newFund);
-
-        // Записываем обновлённый массив фондов в файл
-        writeDatabase(database);
-
-        // Успешный ответ
-        res.json({ message: 'Фонд успешно сохранён', database });
-    } catch (err) {
-        console.error('Ошибка при сохранении фонда:', err);
-        res.status(500).json({ message: 'Ошибка при сохранении фонда' });
-    }
-});
-
-// Маршрут для удаления фонда
 app.post('/delete-fund', (req, res) => {
-    try {
-        const { index } = req.body; // Получаем индекс из запроса
-        let database = readDatabase(); // Читаем текущую базу данных
+    const { index } = req.body;
 
-        // Проверяем корректность индекса
-        if (index >= 0 && index < database.length) {
-            // Удаляем фонд
-            database.splice(index, 1);
-
-            // Записываем обновлённый массив фондов в файл
-            writeDatabase(database);
-
-            res.json({ message: 'Фонд успешно удалён', database });
-        } else {
-            res.status(400).json({ message: 'Некорректный индекс фонда' });
+    // Чтение текущей базы данных фондов
+    fs.readFile(databasePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Ошибка при чтении файла фондов:', err);
+            return res.status(500).json({ message: 'Ошибка при удалении фонда' });
         }
-    } catch (err) {
-        console.error('Ошибка при удалении фонда:', err);
-        res.status(500).json({ message: 'Ошибка при удалении фонда' });
-    }
+
+        let database = [];
+        try {
+            database = JSON.parse(data); // Парсим JSON данные
+        } catch (parseError) {
+            console.error('Ошибка при парсинге файла фондов:', parseError);
+            return res.status(500).json({ message: 'Ошибка при удалении фонда' });
+        }
+
+        // Удаление фонда по индексу
+        if (index >= 0 && index < database.length) {
+            database.splice(index, 1); // Удаляем фонд
+        } else {
+            return res.status(400).json({ message: 'Некорректный индекс фонда' });
+        }
+
+        // Запись обновлённых данных обратно в файл
+        fs.writeFile(databasePath, JSON.stringify(database, null, 2), (err) => {
+            if (err) {
+                console.error('Ошибка при сохранении файла фондов:', err);
+                return res.status(500).json({ message: 'Ошибка при сохранении файла после удаления' });
+            }
+
+            res.json({ message: 'Фонд успешно удалён' });
+        });
+    });
 });
+app.post('/save-fund', (req, res) => {
+    const newFund = req.body; // Получаем данные фонда для сохранения
+    const isRestoring = req.body.isRestoring || false; // Флаг для восстановления фонда
 
+    // Чтение текущей базы данных фондов
+    fs.readFile(databasePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Ошибка при чтении файла фондов:', err);
+            return res.status(500).json({ message: 'Ошибка при сохранении фонда' });
+        }
 
+        let database = [];
+        try {
+            database = JSON.parse(data); // Парсим JSON данные
+        } catch (parseError) {
+            console.error('Ошибка при парсинге файла фондов:', parseError);
+            return res.status(500).json({ message: 'Ошибка при парсинге данных' });
+        }
+
+        if (isRestoring) {
+            // Восстанавливаем удалённый фонд в определённое место
+            const index = req.body.index !== undefined ? req.body.index : 0;
+            database.splice(index, 0, newFund);
+        } else {
+            // Добавляем новый фонд в начало массива
+            database.unshift(newFund);
+        }
+
+        // Запись обновлённых данных обратно в файл
+        fs.writeFile(databasePath, JSON.stringify(database, null, 2), (err) => {
+            if (err) {
+                console.error('Ошибка при сохранении файла фондов:', err);
+                return res.status(500).json({ message: 'Ошибка при сохранении фонда' });
+            }
+
+            res.json({ message: 'Фонд успешно сохранён', fund: newFund });
+        });
+    });
+});
 //ссылки
 app.post('/save-link', (req, res) => {
     const { platform, link } = req.body;

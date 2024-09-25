@@ -26,18 +26,20 @@ document.addEventListener('DOMContentLoaded', function () {
 /* логика модального окна конец */
 
 
-// логика кнопки сохранения
+// Логика кнопки сохранения
 document.getElementById('saveBtn').addEventListener('click', () => {
+    // Получаем все элементы с атрибутом contenteditable="true"
     const editableElements = document.querySelectorAll('[contenteditable="true"]');
     const contentData = {};
 
+    // Проходим по каждому редактируемому элементу и сохраняем его содержимое
     editableElements.forEach((element, index) => {
         contentData[`field_${index}`] = element.innerText.trim();
     });
 
     console.log('Отправляемые данные:', contentData);
 
-    // Сохраняем контент
+    // Отправляем данные на сервер
     fetch('/save-content', {
         method: 'POST',
         headers: {
@@ -53,69 +55,28 @@ document.getElementById('saveBtn').addEventListener('click', () => {
         })
         .then(data => {
             console.log('Данные успешно сохранены:', data);
-
-            // Собираем данные о фондах
-            const funds = [];
-            const fundElements = document.querySelectorAll('.main__list-item');
-
-            fundElements.forEach(item => {
-                const fundName = item.querySelector('.fundName').innerText.trim();
-                const fundType = item.querySelector('.fundType').nextSibling.nodeValue.trim(); // Используем `nextSibling` для получения значения
-                const fundYear = item.querySelector('.fundYear').nextSibling.nodeValue.trim(); // Аналогично
-                const fundDescription = item.querySelector('.fundDescription').innerText.trim();
-
-                const newFund = {
-                    name: fundName,
-                    type: fundType,
-                    year: fundYear,
-                    description: fundDescription
-                };
-
-                funds.push(newFund);
-            });
-
-            // Сохраняем все фонды
-            return fetch('/save-fund', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(funds)
-            });
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка при сохранении фонда');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Фонды успешно сохранены:', data);
-            // window.location.href = '/'; // Если нужно перезагрузить страницу
+            // Здесь можно выполнить дополнительные действия, если необходимо
         })
         .catch(error => {
-            console.error('Ошибка при сохранении данных или фонда:', error);
+            console.error('Ошибка при сохранении данных:', error);
         });
 });
 
-//фонды
-import { database } from "./database.js";
-
+// Фонды
 const listContainer = document.querySelector(".main__list");
 const allButton = document.getElementById("all");
 const backButton = document.getElementById("back");
 const forwardButton = document.getElementById("forward");
 const addFundBtn = document.getElementById('add-fund-btn');
 
+let database = []; // Пустой массив для данных с сервера
 let currentPage = 0;
 const itemsPerPage = 5;
-let lastDeletedFund = null; // Для хранения последнего удаленного фонда
-let lastDeletedIndex = null; // Для хранения индекса удаленного фонда
 
 // Функция отображения фондов на странице
 function displayFunds(first, last) {
-    listContainer.innerHTML = "";
-    const itemsToShow = database.slice(first, last);
+    listContainer.innerHTML = ""; // Очищаем контейнер для фондов
+    const itemsToShow = database.slice(first, last); // Получаем необходимые элементы из базы данных
 
     itemsToShow.forEach((item, index) => {
         const listItem = document.createElement("div");
@@ -151,16 +112,39 @@ function displayFunds(first, last) {
             <button class="delete-btn">Удалить</button>
         `;
 
-
         // Добавляем кнопку удаления и событие удаления элемента
         const deleteButton = listItem.querySelector(".delete-btn");
         deleteButton.addEventListener("click", () => {
             deleteFund(index + first, listItem); // Удаление фонда
         });
 
-        listContainer.appendChild(listItem);
+        listContainer.appendChild(listItem); // Добавляем элемент в контейнер
     });
 }
+
+// Функция для загрузки базы данных с сервера
+function loadDatabase() {
+    fetch('http://localhost:3000/get-funds')  // Заменить URL на реальный адрес API
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке данных');
+            }
+            return response.json();
+        })
+        .then(data => {
+            database = data; // Записываем полученные данные в переменную
+            displayFunds(0, itemsPerPage); // Отображаем первую страницу
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+        });
+}
+
+// Загружаем данные при загрузке страницы
+loadDatabase();
+
+let lastDeletedFund = null; // Для хранения последнего удаленного фонда
+let lastDeletedIndex = null; // Для хранения индекса удаленного фонда
 
 // Функция удаления фонда
 function deleteFund(index, listItem) {
@@ -168,7 +152,28 @@ function deleteFund(index, listItem) {
     lastDeletedFund = database[index];
     lastDeletedIndex = index;
 
-    database.splice(index, 1); // Удаление фонда из массива
+    // Удаление фонда из базы данных
+    database.splice(index, 1);
+
+    // Отправляем запрос на сервер для удаления фонда
+    fetch('/delete-fund', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ index }), // Отправляем индекс удаляемого фонда
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Фонд успешно удалён') {
+                console.log('Фонд удалён на сервере');
+            } else {
+                console.error('Ошибка при удалении фонда на сервере:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при запросе на удаление фонда:', error);
+        });
 
     // Создаём кнопку "Отмена" на месте удалённого фонда
     const undoButton = document.createElement('button');
@@ -188,11 +193,33 @@ function deleteFund(index, listItem) {
 // Функция отмены удаления фонда
 function undoDelete(listItem, undoButton) {
     if (lastDeletedFund !== null && lastDeletedIndex !== null) {
-        // Восстанавливаем удаленный фонд на его прежнее место
+        // Восстанавливаем удаленный фонд на его прежнее место в массиве
         database.splice(lastDeletedIndex, 0, lastDeletedFund);
+
+        // Отправляем запрос на сервер для восстановления фонда
+        fetch('/save-fund', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ...lastDeletedFund, isRestoring: true, index: lastDeletedIndex }), // Отправляем данные фонда и индекс для восстановления
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Фонд успешно сохранён') {
+                    console.log('Фонд восстановлен на сервере');
+                } else {
+                    console.error('Ошибка при восстановлении фонда на сервере:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при запросе на восстановление фонда:', error);
+            });
+
+        // Обновляем отображение после восстановления фонда
         const start = currentPage * itemsPerPage;
         const end = Math.min(start + itemsPerPage, database.length);
-        displayFunds(start, end); // Обновляем отображение после восстановления
+        displayFunds(start, end);
 
         // Удаляем кнопку "Отмена" после восстановления фонда
         undoButton.remove();
@@ -225,29 +252,60 @@ function addNewFund() {
         <button id="save-new-fund-btn">OK</button>
     `;
 
+    // Добавляем форму в начало списка
     listContainer.insertBefore(newFundForm, listContainer.firstChild);
 
+    // Обработчик для кнопки сохранения нового фонда
     const saveNewFundBtn = document.getElementById('save-new-fund-btn');
     saveNewFundBtn.addEventListener('click', () => {
-        const name = document.getElementById('newFundName').value;
-        const type = document.getElementById('newFundType').value;
-        const year = document.getElementById('newFundYear').value;
-        const description = document.getElementById('newFundDescription').value;
+        const name = document.getElementById('newFundName').value.trim();
+        const type = document.getElementById('newFundType').value.trim();
+        const year = document.getElementById('newFundYear').value.trim();
+        const description = document.getElementById('newFundDescription').value.trim();
 
         if (name && type && year && description) {
             const newFund = {
                 name,
                 type,
-                year,
+                year: parseInt(year), // Приводим год к числовому типу
                 description
             };
 
-            database.unshift(newFund); // Добавляем новый фонд в начало массива
-            displayFunds(0, itemsPerPage); // Обновляем отображение
-        }
+            // Проверяем на дубликаты перед добавлением в локальный массив
+            const isDuplicate = database.some(fund => fund.name === newFund.name && fund.year === newFund.year);
+            if (!isDuplicate) {
+                // Отправляем новый фонд на сервер
+                fetch('/save-fund', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newFund), // Отправляем данные нового фонда
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message === 'Фонд успешно сохранён') {
+                            console.log('Новый фонд сохранен на сервере:', data.fund);
 
-        // Удаляем форму после добавления фонда
-        newFundForm.remove();
+                            // Добавляем новый фонд в локальный массив `database`
+                            database.unshift(newFund);
+
+                            // Обновляем отображение, чтобы включить новый фонд
+                            displayFunds(0, itemsPerPage);
+                        } else {
+                            console.error('Ошибка при сохранении фонда на сервере:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при запросе на сохранение фонда:', error);
+                    });
+
+                // Удаляем форму после попытки добавления фонда
+                newFundForm.remove();
+            } else {
+                alert('Фонд с таким названием и годом уже существует!');
+            }
+        }
     });
 }
 
@@ -265,9 +323,7 @@ allButton.addEventListener("click", () => {
 forwardButton.addEventListener("click", () => {
     if ((currentPage + 1) * itemsPerPage < database.length) {
         currentPage++;
-        const start = currentPage * itemsPerPage;
-        const end = Math.min(start + itemsPerPage, database.length);
-        displayFunds(start, end);
+        displayFunds(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
     }
 });
 
@@ -275,12 +331,9 @@ forwardButton.addEventListener("click", () => {
 backButton.addEventListener("click", () => {
     if (currentPage > 0) {
         currentPage--;
-        const start = currentPage * itemsPerPage;
-        const end = start + itemsPerPage;
-        displayFunds(start, end);
+        displayFunds(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
     }
 });
-
 // Изначальные ссылки
 let socialLinks = {
     facebook: 'https://facebook.com',
