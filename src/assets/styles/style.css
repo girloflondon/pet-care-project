@@ -370,7 +370,12 @@ a {
 }
 @media screen and (max-width: 450px) {
   .fund-content {
-    height: 420px;
+    height: 350px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .fund-content {
+    height: 280px;
   }
 }
 
@@ -404,7 +409,7 @@ a {
 }
 @media screen and (max-width: 1350px) {
   .sub-title__h1 {
-    font-size: 0.7em;
+    font-size: 1.2em;
   }
 }
 @media screen and (max-width: 400px) {
@@ -1106,7 +1111,7 @@ body.modal-active {
 }
 
 #saveBtn {
-  width: 200px;
+  width: 300px;
   height: 44px;
   font-size: 1rem;
   border: none;
@@ -1118,4 +1123,56 @@ body.modal-active {
 
 #saveBtn:hover {
   background-color: orange;
+}
+
+.delete-btn {
+  width: 100px;
+  height: 33px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(202, 115, 0);
+  color: rgb(255, 255, 255);
+}
+
+.undo-btn {
+  width: 100px;
+  height: 33px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(0, 88, 204);
+  color: rgb(255, 255, 255);
+}
+
+#add-fund-btn {
+  width: 200px;
+  height: 44px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(0, 151, 13);
+  color: rgb(255, 255, 255);
+}
+
+#add-facebook-link {
+  width: 200px;
+  height: 33px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(0, 151, 13);
+  color: rgb(255, 255, 255);
+  margin: 3px;
+}
+
+#add-instagram-link {
+  width: 200px;
+  height: 33px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(0, 151, 13);
+  color: rgb(255, 255, 255);
+  margin: 3px;
 }/*# sourceMappingURL=style.css.map */
